@@ -1,0 +1,11 @@
+{
+  "document": "office_locations",
+  "chunks": [
+    "summary",
+    "head_office",
+    "branches",
+    "directions",
+    "parking",
+    "accessibility"
+  ]
+}

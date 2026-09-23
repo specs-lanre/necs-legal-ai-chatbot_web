@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-CONSULTATION",
+  "category": "company",
+  "document": "contact",
+  "section": "CONSULTATION",
+  "title": "Consultation",
+  "text_file": "chunks/consultation.txt",
+  "embedding_file": "embeddings/consultation.npy",
+  "status": "active"
+}

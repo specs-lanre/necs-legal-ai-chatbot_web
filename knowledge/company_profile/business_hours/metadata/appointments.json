@@ -1,0 +1,10 @@
+{
+  "chunk_id": "BUS-APPOINTMENTS",
+  "category": "company",
+  "document": "business_hours",
+  "section": "APPOINTMENTS",
+  "title": "Appointments",
+  "text_file": "chunks/appointments.txt",
+  "embedding_file": "embeddings/appointments.npy",
+  "status": "active"
+}

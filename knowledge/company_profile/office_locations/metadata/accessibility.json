@@ -1,0 +1,10 @@
+{
+  "chunk_id": "OFF-ACCESSIBILITY",
+  "category": "company",
+  "document": "office_locations",
+  "section": "ACCESSIBILITY",
+  "title": "Accessibility",
+  "text_file": "chunks/accessibility.txt",
+  "embedding_file": "embeddings/accessibility.npy",
+  "status": "active"
+}

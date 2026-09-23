@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-EXPERIENCE",
+  "category": "company",
+  "document": "company_profile",
+  "section": "EXPERIENCE",
+  "title": "Experience",
+  "text_file": "chunks/experience.txt",
+  "embedding_file": "embeddings/experience.npy",
+  "status": "active"
+}

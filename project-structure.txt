@@ -1,0 +1,329 @@
+.
+├── ai_expander (Copy 2).py
+├── ai_expander (Copy 3).py
+├── ai_expander (Copy 4).py
+├── ai_expander (Copy).py
+├── ai_expander.py
+├── bkup1-main (Copy).py
+├── builder (Copy 2).py
+├── builder (Copy).py
+├── builder_prev1.py
+├── builder_prev2.py
+├── builder.py
+├── clean_text
+│   ├── 2025_05_12_publication_key_developments_in_the_corporate_sector.txt
+│   ├── 2025_05_13_publication_lexology_indepth_dispute_resolution_nigeria_3.txt
+│   ├── 2025_05_13_publication_significant_tax_developments_in_nigeria_2.txt
+│   ├── 2025_07_25_navigating_patent_for_startups_in_nigeria.txt
+│   ├── 2025_09_17_1162.txt
+│   ├── 2026_02_02_bimbo_ademoye_youtube_and_copyright_in_nigeria_legal_issues_under_the_copyright_act_2022.txt
+│   ├── category_all.txt
+│   ├── category_news.txt
+│   ├── category_publications.txt
+│   ├── category_resources_and_guides.txt
+│   ├── contact_us.txt
+│   ├── index.txt
+│   ├── insights.txt
+│   ├── meet_the_team.txt
+│   ├── services_anti_counterfeiting.txt
+│   ├── services_commercial_ip.txt
+│   ├── services_copyright.txt
+│   ├── services_designs.txt
+│   ├── services_domain_names.txt
+│   ├── services_ip_advisory.txt
+│   ├── services_ip_litigation_disputes.txt
+│   ├── services_patents.txt
+│   ├── services_trademarks.txt
+│   └── services.txt
+├── config
+│   ├── ignore_words.txt
+│   └── models.json
+├── config.py
+├── database.py
+├── embedding_builder.py
+├── .env
+├── faiss_builder.py
+├── former_knowledge 
+│   ├── company
+│   ├── company_profile.txt
+│   ├── contact
+│   ├── contact.txt
+│   ├── faq
+│   ├── faqs.txt
+│   ├── lawyers
+│   ├── lawyers.txt
+│   ├── services
+│   │   ├── anti_counterfeiting.txt
+│   │   ├── commercial_ip.txt
+│   │   ├── company_law.txt
+│   │   ├── copyright.txt
+│   │   ├── corporate_law.txt
+│   │   ├── design_rights.txt
+│   │   ├── intellectual_property.txt
+│   │   ├── ip_advisory.txt
+│   │   ├── ip_litigation_and_disputes.txt
+│   │   ├── patents.txt
+│   │   └── trademarks.txt
+│   ├── services.txt
+│   ├── system
+│   │   └── system_rules.txt
+│   └── system_rules.txt
+├── gemini_manager (Copy 2).py
+├── gemini_manager (Copy).py
+├── gemini_manager.py
+├── .gitignore
+├── hash_utils.py
+├── html_cleaner-backup1.py
+├── html_cleaner  backup-2.py
+├── html_cleaner.py
+├── knowledge
+│   ├── ai
+│   │   └── system_rules.txt
+│   ├── company
+│   │   ├── manifest.json
+│   │   └── mission_vision
+│   │       ├── chunks
+│   │       │   ├── mission.txt
+│   │       │   ├── purpose.txt
+│   │       │   ├── related_information.txt
+│   │       │   ├── summary.txt
+│   │       │   └── vision.txt
+│   │       ├── embdeddings
+│   │       ├── manifest.json
+│   │       └── metadata
+│   │           ├── mission.json
+│   │           ├── purpose.json
+│   │           ├── related_information.json
+│   │           ├── summary.json
+│   │           └── vision.json
+│   ├── company_profile
+│   │   ├── business_hours
+│   │   │   ├── chunks
+│   │   │   │   ├── after_hours.txt
+│   │   │   │   ├── appointments.txt
+│   │   │   │   ├── office_hours.txt
+│   │   │   │   ├── online_consultations.txt
+│   │   │   │   ├── public_holidays.txt
+│   │   │   │   └── summary.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── after_hours.json
+│   │   │       ├── appointments.json
+│   │   │       ├── office_hours.json
+│   │   │       ├── online_consultations.json
+│   │   │       ├── public_holidays.json
+│   │   │       └── summary.json
+│   │   ├── company_profile
+│   │   │   ├── chunks
+│   │   │   │   ├── client_commitment.txt
+│   │   │   │   ├── experience.txt
+│   │   │   │   ├── practice_areas.txt
+│   │   │   │   ├── related_information.txt
+│   │   │   │   ├── summary.txt
+│   │   │   │   ├── who_we_are.txt
+│   │   │   │   ├── who_we_serve.txt
+│   │   │   │   └── why_trust_us.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── client_commitment.json
+│   │   │       ├── experience.json
+│   │   │       ├── practice_areas.json
+│   │   │       ├── related_information.json
+│   │   │       ├── summary.json
+│   │   │       ├── who_we_are.json
+│   │   │       ├── who_we_serve.json
+│   │   │       └── why_trust_us.json
+│   │   ├── contact
+│   │   │   ├── chunks
+│   │   │   │   ├── consultation.txt
+│   │   │   │   ├── email.txt
+│   │   │   │   ├── head_office.txt
+│   │   │   │   ├── office_hours.txt
+│   │   │   │   ├── phone.txt
+│   │   │   │   ├── social_media.txt
+│   │   │   │   └── website.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── consultation.json
+│   │   │       ├── email.json
+│   │   │       ├── head_office.json
+│   │   │       ├── office_hours.json
+│   │   │       ├── phone.json
+│   │   │       ├── social_media.json
+│   │   │       └── website.json
+│   │   ├── history
+│   │   │   ├── chunks
+│   │   │   │   ├── achievements.txt
+│   │   │   │   ├── founding.txt
+│   │   │   │   ├── future_direction.txt
+│   │   │   │   ├── growth.txt
+│   │   │   │   ├── milestones.txt
+│   │   │   │   ├── related_information.txt
+│   │   │   │   └── summary.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── achievements.json
+│   │   │       ├── founding.json
+│   │   │       ├── future_direction.json
+│   │   │       ├── growth.json
+│   │   │       ├── milestones.json
+│   │   │       ├── related_information.json
+│   │   │       └── summary.json
+│   │   ├── leadership
+│   │   │   ├── chunks
+│   │   │   │   ├── experience.txt
+│   │   │   │   ├── managing_partner.txt
+│   │   │   │   ├── partners.txt
+│   │   │   │   ├── practice_leaders.txt
+│   │   │   │   ├── related_information.txt
+│   │   │   │   ├── specializations.txt
+│   │   │   │   └── summary.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── experience.json
+│   │   │       ├── managing_partner.json
+│   │   │       ├── partners.json
+│   │   │       ├── practice_leaders.json
+│   │   │       ├── related_information.json
+│   │   │       ├── specializations.json
+│   │   │       └── summary.json
+│   │   ├── office_locations
+│   │   │   ├── chunks
+│   │   │   │   ├── accessibility.txt
+│   │   │   │   ├── branches.txt
+│   │   │   │   ├── directions.txt
+│   │   │   │   ├── head_office.txt
+│   │   │   │   ├── parking.txt
+│   │   │   │   └── summary.txt
+│   │   │   ├── manifest.json
+│   │   │   └── metadata
+│   │   │       ├── accessibility.json
+│   │   │       ├── branches.json
+│   │   │       ├── directions.json
+│   │   │       ├── head_office.json
+│   │   │       ├── parking.json
+│   │   │       └── summary.json
+│   │   └── README.txt
+│   ├── company_profile.txt
+│   ├── contact.txt
+│   ├── faq
+│   ├── faqs.txt
+│   ├── industries
+│   ├── lawyers
+│   ├── lawyers.txt
+│   ├── policies
+│   ├── services
+│   │   ├── anti_counterfeiting.txt
+│   │   ├── commercial_ip.txt
+│   │   ├── company_law.txt
+│   │   ├── copyright.txt
+│   │   ├── corporate_law.txt
+│   │   ├── design_rights.txt
+│   │   ├── intellectual_property.txt
+│   │   ├── ip_advisory.txt
+│   │   ├── ip_litigation_and_disputes.txt
+│   │   ├── patents.txt
+│   │   ├── trademarks
+│   │   │   └── chunks
+│   │   │       └── summary.txt
+│   │   └── trademarks.txt
+│   ├── services.txt
+│   └── system_rules.txt
+├── knowledge_builder
+│   └── knowledge
+├── knowledge_generator
+├── knowledge_index
+├── knowledge_indexer.py
+├── knowledge_source
+│   └── raw_html
+│       └── home.html
+├── knowledge_source_first
+│   └── company
+│       ├── business_hours.md
+│       ├── company_profile.md
+│       ├── contact.md
+│       ├── history.md
+│       ├── leadership.md
+│       ├── mission_vision.md
+│       └── office_locations.md
+├── list_models.py
+├── logger.py
+├── logs
+│   └── builder.log
+├── lookup_builder.py
+├── main.py
+├── metadata_manager.py
+├── models_folder
+├── output
+├── parser (Copy).py
+├── parser.py
+├── project-structure.txt
+├── prompts
+│   ├── company_prompt.md
+│   ├── faq_prompt.md
+│   ├── lawyer_prompt.md
+│   ├── service_prompt.md
+│   └── system_prompt.txt
+├── Readme.md
+├── README.md
+├── requirements
+├── requirements.txt
+├── routers
+│   └── chat.py
+├── scanner.py
+├── schemas
+│   └── chat.py
+├── search_engine.py
+├── search_index
+├── services
+│   ├── bkup-gemini_service (Copy).py
+│   ├── chat_service.py
+│   ├── gemini_service.py
+│   ├── knowledge_index.py
+│   ├── knowledge_retriever.py
+│   └── knowledge_service.py
+├── sim1_listedmodels2.py
+├── sim1_listedmodels.py
+├── sim1_listmodels_extra.py
+├── sim1_listmodels.py
+├── sim1.py
+├── static
+│   ├── css
+│   │   └── chatbot.css
+│   └── js
+│       └── chatbot.js
+├── templates
+│   └── chatbot.html
+├── test_folder
+├── validator (Copy).py
+├── validator.py
+├── website_cache
+│   ├── 2025_05_12_publication_key_developments_in_the_corporate_sector.html
+│   ├── 2025_05_13_publication_lexology_indepth_dispute_resolution_nigeria_3.html
+│   ├── 2025_05_13_publication_significant_tax_developments_in_nigeria_2.html
+│   ├── 2025_07_25_navigating_patent_for_startups_in_nigeria.html
+│   ├── 2025_09_17_1162.html
+│   ├── 2026_02_02_bimbo_ademoye_youtube_and_copyright_in_nigeria_legal_issues_under_the_copyright_act_2022.html
+│   ├── category_all.html
+│   ├── category_news.html
+│   ├── category_publications.html
+│   ├── category_resources_and_guides.html
+│   ├── contact_us.html
+│   ├── index.html
+│   ├── insights.html
+│   ├── meet_the_team.html
+│   ├── services_anti_counterfeiting.html
+│   ├── services_commercial_ip.html
+│   ├── services_copyright.html
+│   ├── services_designs.html
+│   ├── services_domain_names.html
+│   ├── services.html
+│   ├── services_ip_advisory.html
+│   ├── services_ip_litigation_disputes.html
+│   ├── services_patents.html
+│   └── services_trademarks.html
+├── website_crawler_1.py
+├── website_crawler.py
+└── website_discovery.py
+
+65 directories, 262 files

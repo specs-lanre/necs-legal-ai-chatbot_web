@@ -1,0 +1,11 @@
+TITLE
+Email
+
+SECTION
+EMAIL
+
+CONTENT
+This section contains professional knowledge for 'email' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

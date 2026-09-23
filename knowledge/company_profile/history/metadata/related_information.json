@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-RELATED_INFORMATION",
+  "category": "company",
+  "document": "history",
+  "section": "RELATED_INFORMATION",
+  "title": "Related Information",
+  "text_file": "chunks/related_information.txt",
+  "embedding_file": "embeddings/related_information.npy",
+  "status": "active"
+}

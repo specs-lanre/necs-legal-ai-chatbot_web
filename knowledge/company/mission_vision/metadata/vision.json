@@ -1,0 +1,15 @@
+{
+  "chunk_id": "COMP-MV-003",
+  "category": "company",
+  "document": "mission_vision",
+  "section": "VISION",
+  "title": "Vision Statement",
+  "keywords": [
+    "vision",
+    "future",
+    "leadership",
+    "Africa"
+  ],
+  "embedding_file": "vision.npy",
+  "text_file": "vision.txt"
+}

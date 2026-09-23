@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-CLIENT_COMMITMENT",
+  "category": "company",
+  "document": "company_profile",
+  "section": "CLIENT_COMMITMENT",
+  "title": "Client Commitment",
+  "text_file": "chunks/client_commitment.txt",
+  "embedding_file": "embeddings/client_commitment.npy",
+  "status": "active"
+}

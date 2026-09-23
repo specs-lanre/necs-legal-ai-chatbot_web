@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-MILESTONES",
+  "category": "company",
+  "document": "history",
+  "section": "MILESTONES",
+  "title": "Milestones",
+  "text_file": "chunks/milestones.txt",
+  "embedding_file": "embeddings/milestones.npy",
+  "status": "active"
+}

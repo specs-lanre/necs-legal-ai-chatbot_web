@@ -1,0 +1,10 @@
+{
+  "chunk_id": "OFF-PARKING",
+  "category": "company",
+  "document": "office_locations",
+  "section": "PARKING",
+  "title": "Parking",
+  "text_file": "chunks/parking.txt",
+  "embedding_file": "embeddings/parking.npy",
+  "status": "active"
+}

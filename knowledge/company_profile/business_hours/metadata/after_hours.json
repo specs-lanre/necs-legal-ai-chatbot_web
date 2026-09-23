@@ -1,0 +1,10 @@
+{
+  "chunk_id": "BUS-AFTER_HOURS",
+  "category": "company",
+  "document": "business_hours",
+  "section": "AFTER_HOURS",
+  "title": "After Hours",
+  "text_file": "chunks/after_hours.txt",
+  "embedding_file": "embeddings/after_hours.npy",
+  "status": "active"
+}

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "LEA-MANAGING_PARTNER",
+  "category": "company",
+  "document": "leadership",
+  "section": "MANAGING_PARTNER",
+  "title": "Managing Partner",
+  "text_file": "chunks/managing_partner.txt",
+  "embedding_file": "embeddings/managing_partner.npy",
+  "status": "active"
+}

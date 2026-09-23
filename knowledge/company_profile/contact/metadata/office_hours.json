@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-OFFICE_HOURS",
+  "category": "company",
+  "document": "contact",
+  "section": "OFFICE_HOURS",
+  "title": "Office Hours",
+  "text_file": "chunks/office_hours.txt",
+  "embedding_file": "embeddings/office_hours.npy",
+  "status": "active"
+}

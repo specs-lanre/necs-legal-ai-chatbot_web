@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-EMAIL",
+  "category": "company",
+  "document": "contact",
+  "section": "EMAIL",
+  "title": "Email",
+  "text_file": "chunks/email.txt",
+  "embedding_file": "embeddings/email.npy",
+  "status": "active"
+}

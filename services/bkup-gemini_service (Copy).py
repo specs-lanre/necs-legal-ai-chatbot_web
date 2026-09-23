@@ -20,16 +20,5 @@ def ask_gemini(message: str) -> str:
 				"""
 		response = client.models.generate_content(model=GEMINI_MODEL,contents=prompt)
 		return response.text
-	except errors.APIError as e:
-			print(f"Gemini API Error: {e}")
-
-			return (
-				"I'm sorry, our AI assistant is temporarily unavailable. "
-				"Please try again in a few moments."
-			)
-	except Exception as e:
-			print(f"Unexpected Error: {e}")
-
-			return (
-				"An unexpected error occurred while processing your request."
-			)
+	except ClientError as e:
+			return f"Gemini API Error: {e}"

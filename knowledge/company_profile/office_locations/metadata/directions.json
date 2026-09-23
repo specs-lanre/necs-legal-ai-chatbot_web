@@ -1,0 +1,10 @@
+{
+  "chunk_id": "OFF-DIRECTIONS",
+  "category": "company",
+  "document": "office_locations",
+  "section": "DIRECTIONS",
+  "title": "Directions",
+  "text_file": "chunks/directions.txt",
+  "embedding_file": "embeddings/directions.npy",
+  "status": "active"
+}

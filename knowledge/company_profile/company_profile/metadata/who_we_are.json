@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-WHO_WE_ARE",
+  "category": "company",
+  "document": "company_profile",
+  "section": "WHO_WE_ARE",
+  "title": "Who We Are",
+  "text_file": "chunks/who_we_are.txt",
+  "embedding_file": "embeddings/who_we_are.npy",
+  "status": "active"
+}

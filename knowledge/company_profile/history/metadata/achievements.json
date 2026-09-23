@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-ACHIEVEMENTS",
+  "category": "company",
+  "document": "history",
+  "section": "ACHIEVEMENTS",
+  "title": "Achievements",
+  "text_file": "chunks/achievements.txt",
+  "embedding_file": "embeddings/achievements.npy",
+  "status": "active"
+}

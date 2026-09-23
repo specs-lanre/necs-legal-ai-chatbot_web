@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-GROWTH",
+  "category": "company",
+  "document": "history",
+  "section": "GROWTH",
+  "title": "Growth",
+  "text_file": "chunks/growth.txt",
+  "embedding_file": "embeddings/growth.npy",
+  "status": "active"
+}

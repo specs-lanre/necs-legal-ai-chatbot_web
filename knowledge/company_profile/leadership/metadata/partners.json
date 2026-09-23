@@ -1,0 +1,10 @@
+{
+  "chunk_id": "LEA-PARTNERS",
+  "category": "company",
+  "document": "leadership",
+  "section": "PARTNERS",
+  "title": "Partners",
+  "text_file": "chunks/partners.txt",
+  "embedding_file": "embeddings/partners.npy",
+  "status": "active"
+}

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-PRACTICE_AREAS",
+  "category": "company",
+  "document": "company_profile",
+  "section": "PRACTICE_AREAS",
+  "title": "Practice Areas",
+  "text_file": "chunks/practice_areas.txt",
+  "embedding_file": "embeddings/practice_areas.npy",
+  "status": "active"
+}

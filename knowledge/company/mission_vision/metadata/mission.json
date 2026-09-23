@@ -1,0 +1,15 @@
+{
+  "chunk_id": "COMP-MV-002",
+  "category": "company",
+  "document": "mission_vision",
+  "section": "MISSION",
+  "title": "Mission Statement",
+  "keywords": [
+    "mission",
+    "purpose",
+    "ethics",
+    "client service"
+  ],
+  "embedding_file": "mission.npy",
+  "text_file": "mission.txt"
+}

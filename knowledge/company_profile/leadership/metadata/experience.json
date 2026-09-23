@@ -1,0 +1,10 @@
+{
+  "chunk_id": "LEA-EXPERIENCE",
+  "category": "company",
+  "document": "leadership",
+  "section": "EXPERIENCE",
+  "title": "Experience",
+  "text_file": "chunks/experience.txt",
+  "embedding_file": "embeddings/experience.npy",
+  "status": "active"
+}

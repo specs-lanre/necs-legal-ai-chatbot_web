@@ -1,0 +1,11 @@
+TITLE
+Office Hours
+
+SECTION
+OFFICE_HOURS
+
+CONTENT
+This section contains professional knowledge for 'office hours' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

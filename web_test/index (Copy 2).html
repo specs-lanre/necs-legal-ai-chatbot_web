@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NECS Legal AI Test Chat</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .chat-container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .status {
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        #messages {
+            height: 450px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+            border-radius: 5px;
+        }
+
+        .message {
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .user {
+            font-weight: bold;
+        }
+
+        .lex {
+            font-weight: bold;
+        }
+
+        .answer {
+            white-space: pre-wrap;
+            margin-top: 5px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #question:focus {
+            border-color: #555;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        /*
+         * Typing / loading indicator
+         */
+
+        .typing {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 5px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            background: #666;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 80%, 100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <h1>NECS Legal AI</h1>
+
+    <div class="status">
+        Test interface connected to FastAPI
+    </div>
+
+    <div id="messages"></div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Ask Lex a question..."
+            autocomplete="off"
+        >
+
+        <button id="sendButton">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+     * FastAPI endpoint
+     */
+    const API_URL = "http://127.0.0.1:8000/chat";
+
+
+    /*
+     * Get HTML elements
+     */
+    const messages = document.getElementById("messages");
+
+    const questionInput = document.getElementById("question");
+
+    const sendButton = document.getElementById("sendButton");
+
+
+    /*
+     * Add a normal message to the chat
+     */
+    function addMessage(sender, text) {
+
+        const message = document.createElement("div");
+
+        message.className = "message";
+
+
+        const senderElement = document.createElement("div");
+
+        if (sender === "You") {
+            senderElement.className = "user";
+        } else {
+            senderElement.className = "lex";
+        }
+
+        senderElement.textContent = sender + ":";
+
+
+        const answerElement = document.createElement("div");
+
+        answerElement.className = "answer";
+
+        answerElement.textContent = text;
+
+
+        message.appendChild(senderElement);
+
+        message.appendChild(answerElement);
+
+
+        messages.appendChild(message);
+
+
+        /*
+         * Scroll to the newest message
+         */
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+
+    /*
+     * Show the loading / typing indicator
+     */
+    function showTypingIndicator() {
+
+        /*
+         * Prevent duplicate indicators
+         */
+        if (document.getElementById("typingIndicator")) {
+            return;
+        }
+
+
+        const message = document.createElement("div");
+
+        message.className = "message";
+
+        message.id = "typingIndicator";
+
+
+        const senderElement = document.createElement("div");
+
+        senderElement.className = "lex";
+
+        senderElement.textContent = "Lex:";
+
+
+        const typingElement = document.createElement("div");
+
+        typingElement.className = "typing";
+
+
+        /*
+         * Thinking text + animated dots
+         */
+        typingElement.innerHTML = `
+            <span>Thinking</span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        `;
+
+
+        message.appendChild(senderElement);
+
+        message.appendChild(typingElement);
+
+
+        messages.appendChild(message);
+
+
+        /*
+         * Scroll to the bottom
+         */
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+
+    /*
+     * Remove the loading indicator
+     */
+    function removeTypingIndicator() {
+
+        const indicator =
+            document.getElementById("typingIndicator");
+
+
+        if (indicator) {
+            indicator.remove();
+        }
+    }
+
+
+    /*
+     * Send question to FastAPI
+     */
+    async function sendQuestion() {
+
+        const question = questionInput.value.trim();
+
+
+        /*
+         * Do nothing for empty input
+         */
+        if (!question) {
+            return;
+        }
+
+
+        /*
+         * Show user's question
+         */
+        addMessage("You", question);
+
+
+        /*
+         * Clear input box
+         */
+        questionInput.value = "";
+
+
+        /*
+         * Disable Send while waiting
+         */
+        sendButton.disabled = true;
+
+
+        /*
+         * Show loader
+         */
+        showTypingIndicator();
+
+
+        try {
+
+            /*
+             * Send POST request to FastAPI
+             */
+            const response = await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    question: question
+                })
+
+            });
+
+
+            /*
+             * Convert response to JSON
+             */
+            const data = await response.json();
+
+
+            /*
+             * Remove loader as soon as a response arrives
+             */
+            removeTypingIndicator();
+
+
+            /*
+             * Check HTTP response
+             */
+            if (!response.ok) {
+
+                throw new Error(
+                    data.detail || "Request failed."
+                );
+
+            }
+
+
+            /*
+             * Show Lex answer
+             */
+            addMessage("Lex", data.answer);
+
+
+        } catch (error) {
+
+            /*
+             * Remove loader if an error occurs
+             */
+            removeTypingIndicator();
+
+
+            /*
+             * Show error in chat
+             */
+            addMessage(
+                "Lex",
+                "Sorry, I couldn't connect to the chatbot.\n\n" +
+                error.message
+            );
+
+
+        } finally {
+
+            /*
+             * Re-enable Send button
+             */
+            sendButton.disabled = false;
+
+
+            /*
+             * Put cursor back in input box
+             */
+            questionInput.focus();
+
+        }
+    }
+
+
+    /*
+     * Send when button is clicked
+     */
+    sendButton.addEventListener(
+        "click",
+        sendQuestion
+    );
+
+
+    /*
+     * Send when Enter is pressed
+     */
+    questionInput.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                sendQuestion();
+
+            }
+        }
+    );
+
+
+    /*
+     * Focus input automatically when page loads
+     */
+    questionInput.focus();
+
+</script>
+
+</body>
+</html>

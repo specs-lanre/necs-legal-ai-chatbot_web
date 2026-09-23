@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-WHY_TRUST_US",
+  "category": "company",
+  "document": "company_profile",
+  "section": "WHY_TRUST_US",
+  "title": "Why Trust Us",
+  "text_file": "chunks/why_trust_us.txt",
+  "embedding_file": "embeddings/why_trust_us.npy",
+  "status": "active"
+}

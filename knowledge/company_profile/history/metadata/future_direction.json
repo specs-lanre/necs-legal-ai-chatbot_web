@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-FUTURE_DIRECTION",
+  "category": "company",
+  "document": "history",
+  "section": "FUTURE_DIRECTION",
+  "title": "Future Direction",
+  "text_file": "chunks/future_direction.txt",
+  "embedding_file": "embeddings/future_direction.npy",
+  "status": "active"
+}

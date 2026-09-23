@@ -1,0 +1,131 @@
+"""
+=================================================
+
+Knowledge Builder
+
+HTML Cleaner
+
+Extracts useful content from downloaded HTML.
+
+Version: 1.0
+
+=================================================
+"""
+import re
+from pathlib import Path
+from bs4 import BeautifulSoup
+
+from config import Config
+from logger import Logger
+
+
+class HtmlCleaner:
+	def __init__(self):
+		self.config = Config();self.logger = Logger()
+		self.logger.info("HTML Cleaner initialized.")
+		self.cache_folder = Path("website_cache")
+		self.output_folder = Path("clean_text")
+		self.output_folder.mkdir(exist_ok=True)
+		self.cleaned_files = []
+	def load_html(self, filepath: Path):
+		"""
+		Loads a cached HTML file. Parameters  ---------- filepath : Path
+		HTML file to load.   Returns    -------    str    HTML content."""
+		self.logger.info(f"Loading HTML : {filepath.name}")
+		try:
+			html = filepath.read_text(encoding="utf-8",errors="ignore")
+			self.logger.info(f"Loaded {len(html):,} characters.")
+			return html
+		except Exception as ex:self.logger.error(f"Unable to load {filepath.name} : {ex}");return None
+	def extract_main_content(self, html):
+		"""Extracts the main readable content from HTML.
+		Parameters----------html : str  Returns  -------  str"""
+		self.logger.info("Extracting main content...")
+		try:
+			soup = BeautifulSoup(html, "html.parser")
+			# Remove unwanted tags completely
+			for tag in soup(["script","style","noscript","iframe","svg","canvas","footer","header","nav","aside","form"]):
+				tag.decompose()
+			# ---------- WordPress Content ----------
+			selectors = ["main","article", ".entry-content",".post-content",
+			".page-content",".elementor-widget-theme-post-content",".elementor-location-single",
+			"#content",".site-content" ]
+			content = None
+			for selector in selectors:
+				content = soup.select_one(selector)
+				if content is not None:
+					self.logger.info(f"Content found using '{selector}'")
+					break
+			if content is None:
+				self.logger.warning("No content selector matched. Using body.")
+				content = soup.body
+			if content is None:
+				self.logger.error("No readable content found.")
+				return None
+			text = content.get_text(separator="\n",strip=True)
+			self.logger.info(f"Extracted {len(text):,} characters.")
+			return text
+		except Exception as ex:
+			self.logger.error(f"Extraction failed : {ex}")
+			return None
+	
+	def clean_text(self, text):
+		"""Cleans extracted website text. Parameters  ---------- text : str  Returns  -------   str  """
+		self.logger.info("Cleaning extracted text...")
+		if text is None:
+			return None
+		# ----------------------------------
+		# Normalize line endings
+		# ----------------------------------
+		text = text.replace("\r\n", "\n");text = text.replace("\r", "\n")
+		# ----------------------------------
+		# Split into lines
+		# ----------------------------------
+		lines = text.split("\n");cleaned = [];previous = ""
+		# --------# Words/Phrases to ignore--------------
+		ignore = {"home","about","services", "blog","news","contact","facebook","twitter",
+		 "linkedin","instagram","youtube",
+		 "privacy policy","cookie policy","accept cookies","manage consent","skip to content","search","menu" }
+		 # ------# Clean every line # --------------
+		for line in lines:
+			 line = line.strip()
+			 if line == "":
+				 continue
+				 # Remove duplicate consecutive lines
+			 if line == previous:
+				 continue
+			 previous = line
+			 # Ignore navigation words
+			 if line.lower() in ignore:
+				 continue
+			 # Ignore very short junk
+			 if len(line) == 1:
+				 continue
+			 cleaned.append(line)
+		# --# Join back together # ---------
+		text = "\n\n".join(cleaned)
+		# ----# Collapse excessive spaces # ---------
+		text = re.sub(r"[ \t]+", " ", text)
+		# ----# Collapse too many blank lines# --------
+		text = re.sub(r"\n{3,}", "\n\n", text)
+		self.logger.info(f"Clean text length : {len(text):,} characters." )
+		return text
+
+
+
+
+if __name__ == "__main__":
+	cleaner = HtmlCleaner()
+	filepath = Path("website_cache/index.html")
+	html = cleaner.load_html(filepath)
+	if html:
+		print();print("=" * 60);print("FIRST 800 CHARACTERS")
+		print("=" * 60);print(html[:800]);print();
+		print("=" * 60);print(f"TOTAL CHARACTERS : {len(html):,}")
+	text = cleaner.extract_main_content(html)
+	print();print("=" * 60);print("EXTRACTED CONTENT");
+	print("=" * 60);
+	print(text[:3000])
+	clean = cleaner.clean_text(text)
+	print();print("=" * 60);print("CLEAN TEXT");print("=" * 60)
+	print(clean[:4000])

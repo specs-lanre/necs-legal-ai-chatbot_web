@@ -1,0 +1,10 @@
+{
+  "chunk_id": "BUS-PUBLIC_HOLIDAYS",
+  "category": "company",
+  "document": "business_hours",
+  "section": "PUBLIC_HOLIDAYS",
+  "title": "Public Holidays",
+  "text_file": "chunks/public_holidays.txt",
+  "embedding_file": "embeddings/public_holidays.npy",
+  "status": "active"
+}

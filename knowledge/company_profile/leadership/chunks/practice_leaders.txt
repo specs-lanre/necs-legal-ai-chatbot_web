@@ -1,0 +1,11 @@
+TITLE
+Practice Leaders
+
+SECTION
+PRACTICE_LEADERS
+
+CONTENT
+This section contains professional knowledge for 'practice leaders' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

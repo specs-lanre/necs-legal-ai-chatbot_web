@@ -1,0 +1,23 @@
+{
+    "chunk_id": "COMP-MV-004",
+    "category": "company",
+    "document": "mission_vision",
+    "section": "PURPOSE",
+    "title": "Our Purpose",
+    "description": "Explains why NECS Legal exists and its long-term purpose.",
+    "keywords": [
+        "purpose",
+        "why NECS Legal exists",
+        "client commitment",
+        "legal services",
+        "professional purpose",
+        "company purpose"
+    ],
+    "language": "en",
+    "author": "NECS Legal",
+    "version": "1.0",
+    "last_updated": "2026-07-27",
+    "text_file": "chunks/purpose.txt",
+    "embedding_file": "embeddings/purpose.npy",
+    "status": "active"
+}

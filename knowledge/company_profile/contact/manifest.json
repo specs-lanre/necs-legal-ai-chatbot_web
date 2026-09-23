@@ -1,0 +1,12 @@
+{
+  "document": "contact",
+  "chunks": [
+    "head_office",
+    "phone",
+    "email",
+    "website",
+    "office_hours",
+    "consultation",
+    "social_media"
+  ]
+}

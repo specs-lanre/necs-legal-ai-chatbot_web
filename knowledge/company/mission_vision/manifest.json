@@ -1,0 +1,11 @@
+{
+  "document": "mission_vision",
+  "category": "company",
+  "chunks": [
+    "summary",
+    "mission",
+    "vision",
+    "purpose",
+    "related_information"
+  ]
+}

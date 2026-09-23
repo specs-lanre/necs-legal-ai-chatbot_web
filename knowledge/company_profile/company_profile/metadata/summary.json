@@ -1,0 +1,10 @@
+{
+  "chunk_id": "COM-SUMMARY",
+  "category": "company",
+  "document": "company_profile",
+  "section": "SUMMARY",
+  "title": "Summary",
+  "text_file": "chunks/summary.txt",
+  "embedding_file": "embeddings/summary.npy",
+  "status": "active"
+}

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "LEA-SPECIALIZATIONS",
+  "category": "company",
+  "document": "leadership",
+  "section": "SPECIALIZATIONS",
+  "title": "Specializations",
+  "text_file": "chunks/specializations.txt",
+  "embedding_file": "embeddings/specializations.npy",
+  "status": "active"
+}

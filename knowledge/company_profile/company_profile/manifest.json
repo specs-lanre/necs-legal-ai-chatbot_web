@@ -1,0 +1,13 @@
+{
+  "document": "company_profile",
+  "chunks": [
+    "summary",
+    "who_we_are",
+    "practice_areas",
+    "who_we_serve",
+    "experience",
+    "client_commitment",
+    "why_trust_us",
+    "related_information"
+  ]
+}

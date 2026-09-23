@@ -1,0 +1,11 @@
+TITLE
+Who We Serve
+
+SECTION
+WHO_WE_SERVE
+
+CONTENT
+This section contains professional knowledge for 'who we serve' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "OFF-BRANCHES",
+  "category": "company",
+  "document": "office_locations",
+  "section": "BRANCHES",
+  "title": "Branches",
+  "text_file": "chunks/branches.txt",
+  "embedding_file": "embeddings/branches.npy",
+  "status": "active"
+}

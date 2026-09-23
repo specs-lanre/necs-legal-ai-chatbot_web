@@ -1,0 +1,11 @@
+{
+  "document": "business_hours",
+  "chunks": [
+    "summary",
+    "office_hours",
+    "public_holidays",
+    "after_hours",
+    "online_consultations",
+    "appointments"
+  ]
+}

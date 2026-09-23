@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-HEAD_OFFICE",
+  "category": "company",
+  "document": "contact",
+  "section": "HEAD_OFFICE",
+  "title": "Head Office",
+  "text_file": "chunks/head_office.txt",
+  "embedding_file": "embeddings/head_office.npy",
+  "status": "active"
+}

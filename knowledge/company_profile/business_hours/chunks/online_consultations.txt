@@ -1,0 +1,11 @@
+TITLE
+Online Consultations
+
+SECTION
+ONLINE_CONSULTATIONS
+
+CONTENT
+This section contains professional knowledge for 'online consultations' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

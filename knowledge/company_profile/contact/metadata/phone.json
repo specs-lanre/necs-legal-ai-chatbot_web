@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-PHONE",
+  "category": "company",
+  "document": "contact",
+  "section": "PHONE",
+  "title": "Phone",
+  "text_file": "chunks/phone.txt",
+  "embedding_file": "embeddings/phone.npy",
+  "status": "active"
+}

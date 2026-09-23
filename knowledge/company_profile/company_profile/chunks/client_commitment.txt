@@ -1,0 +1,11 @@
+TITLE
+Client Commitment
+
+SECTION
+CLIENT_COMMITMENT
+
+CONTENT
+This section contains professional knowledge for 'client commitment' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "BUS-ONLINE_CONSULTATIONS",
+  "category": "company",
+  "document": "business_hours",
+  "section": "ONLINE_CONSULTATIONS",
+  "title": "Online Consultations",
+  "text_file": "chunks/online_consultations.txt",
+  "embedding_file": "embeddings/online_consultations.npy",
+  "status": "active"
+}

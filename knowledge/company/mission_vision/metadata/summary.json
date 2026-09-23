@@ -1,0 +1,15 @@
+{
+  "chunk_id": "COMP-MV-001",
+  "category": "company",
+  "document": "mission_vision",
+  "section": "SUMMARY",
+  "title": "Mission and Vision Summary",
+  "keywords": [
+    "mission",
+    "vision",
+    "company",
+    "firm"
+  ],
+  "embedding_file": "summary.npy",
+  "text_file": "summary.txt"
+}

@@ -1,0 +1,11 @@
+TITLE
+Why Trust Us
+
+SECTION
+WHY_TRUST_US
+
+CONTENT
+This section contains professional knowledge for 'why trust us' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

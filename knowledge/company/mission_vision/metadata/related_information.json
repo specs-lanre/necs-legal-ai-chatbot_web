@@ -1,0 +1,46 @@
+{
+    "chunk_id": "COMP-MV-005",
+    "category": "company",
+    "document": "mission_vision",
+    "section": "RELATED_INFORMATION",
+    "title": "Related Information",
+    "description": "Lists company knowledge documents and related legal service documents connected to the Mission and Vision.",
+    "keywords": [
+        "related information",
+        "company documents",
+        "company profile",
+        "leadership",
+        "services",
+        "contact",
+        "practice areas",
+        "knowledge navigation"
+    ],
+    "related_documents": [
+        "company_profile",
+        "history",
+        "core_values",
+        "leadership",
+        "industries_served",
+        "awards",
+        "csr",
+        "contact",
+        "office_locations",
+        "business_hours"
+    ],
+    "related_services": [
+        "Intellectual Property",
+        "Trademarks",
+        "Patents",
+        "Copyright",
+        "Commercial IP",
+        "Corporate Law",
+        "Company Law",
+        "Anti-Counterfeiting"
+    ],
+    "language": "en",
+    "version": "1.0",
+    "last_updated": "2026-07-27",
+    "text_file": "chunks/related_information.txt",
+    "embedding_file": "embeddings/related_information.npy",
+    "status": "active"
+}

@@ -1,0 +1,10 @@
+{
+  "chunk_id": "LEA-PRACTICE_LEADERS",
+  "category": "company",
+  "document": "leadership",
+  "section": "PRACTICE_LEADERS",
+  "title": "Practice Leaders",
+  "text_file": "chunks/practice_leaders.txt",
+  "embedding_file": "embeddings/practice_leaders.npy",
+  "status": "active"
+}

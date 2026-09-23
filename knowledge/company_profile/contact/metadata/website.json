@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-WEBSITE",
+  "category": "company",
+  "document": "contact",
+  "section": "WEBSITE",
+  "title": "Website",
+  "text_file": "chunks/website.txt",
+  "embedding_file": "embeddings/website.npy",
+  "status": "active"
+}

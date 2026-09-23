@@ -1,0 +1,11 @@
+TITLE
+Public Holidays
+
+SECTION
+PUBLIC_HOLIDAYS
+
+CONTENT
+This section contains professional knowledge for 'public holidays' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.

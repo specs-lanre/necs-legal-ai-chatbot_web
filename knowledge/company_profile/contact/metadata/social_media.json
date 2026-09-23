@@ -1,0 +1,10 @@
+{
+  "chunk_id": "CON-SOCIAL_MEDIA",
+  "category": "company",
+  "document": "contact",
+  "section": "SOCIAL_MEDIA",
+  "title": "Social Media",
+  "text_file": "chunks/social_media.txt",
+  "embedding_file": "embeddings/social_media.npy",
+  "status": "active"
+}

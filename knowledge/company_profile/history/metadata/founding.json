@@ -1,0 +1,10 @@
+{
+  "chunk_id": "HIS-FOUNDING",
+  "category": "company",
+  "document": "history",
+  "section": "FOUNDING",
+  "title": "Founding",
+  "text_file": "chunks/founding.txt",
+  "embedding_file": "embeddings/founding.npy",
+  "status": "active"
+}

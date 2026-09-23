@@ -1,0 +1,11 @@
+TITLE
+Head Office
+
+SECTION
+HEAD_OFFICE
+
+CONTENT
+This section contains professional knowledge for 'head office' relating to NECS Legal. Replace this placeholder with your finalized firm-specific content.
+
+RELATED INFORMATION
+See other company knowledge documents.
