@@ -15,16 +15,20 @@ class GeminiManager:
             api_key=os.getenv("GEMINI_API_KEY")
         )
 
-        self.PREFERRED_MODELS = [
-            "models/gemini-3.6-flash",
-            "models/gemini-3.5-flash",
-            "models/gemini-3.5-flash-lite",
-            "models/gemini-3.1-flash-lite",
-            "models/gemini-2.5-flash",
-            "models/gemini-2.0-flash",
-            "models/gemma-4-26b-a4b-it"
-        ]
-
+	
+	
+	
+	        self.PREFERRED_MODELS = [
+    "gemini-3.8-flash",
+    "gemini-3.7-flash",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.5-flash",
+    "gemini-3.1-flash-lite",
+    "gemma-4-26b-it"
+     ]			
+								
+				
         self.models_folder = Path("config")
         self.models_folder.mkdir(exist_ok=True)
 

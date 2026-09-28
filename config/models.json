@@ -1,4 +1,4 @@
 {
-    "chat_model": "models/gemini-3.6-flash",
-    "embedding_model": "models/gemini-embedding-2"
+    "chat_model": "gemini-3.6-flash",
+    "embedding_model": "gemini-embedding-2-preview"
 }
