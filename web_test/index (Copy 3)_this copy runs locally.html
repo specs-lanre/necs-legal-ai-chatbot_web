@@ -1046,14 +1046,11 @@ How can I help you today?
         ============================================================
         FASTAPI CHAT ENDPOINT
         ============================================================
-       
-       this is for local 
+        */
+
         const API_URL =
             "http://127.0.0.1:8000/chat";
- */
 
-const API_URL =
-    "https://necs-legal-ai-chatbot-web.onrender.com/api/chat";
 
         /*
         ============================================================
@@ -1503,21 +1500,11 @@ const API_URL =
                                     "application/json"
                             },
 
-                            /*body:
+                            body:
                                 JSON.stringify({
                                     question:
                                         question
-                                })*/
-                                
-							body:
-					JSON.stringify({
-						message:
-							question
-					})      
-												
-												
-                                
-                                
+                                })
                         }
                     );
 
@@ -1554,13 +1541,9 @@ const API_URL =
                 Show Lex answer
                 */
 
-               /* addLexMessage(
+                addLexMessage(
                     data.answer
                 );
-                */
-                
-                
-                addLexMessage( data.reply);
 
 
             }
