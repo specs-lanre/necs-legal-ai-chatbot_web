@@ -1,6 +1,5 @@
 
-from fastapi import APIRouter
-from fastapi import Request
+from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -20,20 +19,19 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/chat", response_class=HTMLResponse)
 async def chat_page(request: Request):
-
-	return templates.TemplateResponse(
-    request=request,
-    name="chatbot.html"
-	)
+    return templates.TemplateResponse(
+        request=request,
+        name="chatbot.html"
+    )
 
 
 # -------------------------------------------------
 # Chat API
 # -------------------------------------------------
 
-@router.post("/api/chat", response_model=ChatResponse)
+@router.post("/api/chat")
 async def chat(request: ChatRequest):
 
-    reply = process_chat(request.message)
+    reply = process_chat(request.question)
 
-    return ChatResponse(reply=reply)
+    return {"answer": reply}
