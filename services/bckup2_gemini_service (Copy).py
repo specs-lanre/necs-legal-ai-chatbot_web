@@ -1,0 +1,35 @@
+from google import genai
+from google.genai import errors
+from config import GEMINI_API_KEY , GEMINI_MODEL
+from services.knowledge_service import load_knowledge
+
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+
+def ask_gemini(message: str) -> str:
+	try:
+		knowledge = load_knowledge()
+		prompt = f"""
+				{knowledge}
+
+				Visitor Question:
+
+				{message}
+
+				Answer as NECS Legal.
+				"""
+		response = client.models.generate_content(model=GEMINI_MODEL,contents=prompt)
+		return response.text
+	except errors.APIError as e:
+			print(f"Gemini API Error: {e}")
+
+			return (
+				"I'm sorry, our AI assistant is temporarily unavailable. "
+				"Please try again in a few moments."
+			)
+	except Exception as e:
+			print(f"Unexpected Error: {e}")
+
+			return (
+				"An unexpected error occurred while processing your request."
+			)
