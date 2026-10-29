@@ -1,23 +1,14 @@
+
+import time
+
 from gemini_manager import GeminiManager
 
 
 class ChatBot:
-    """
-    Sends a completed prompt to the Gemini chat model
-    and returns the generated response.
-
-    This component does NOT:
-    - perform retrieval
-    - create embeddings
-    - build prompts
-    - modify knowledge
-    """
-
     def __init__(self):
         print("Initializing ChatBot...")
 
         self.manager = GeminiManager()
-
         self.client = self.manager.client
         self.chat_model = self.manager.get_chat_model()
 
@@ -25,60 +16,72 @@ class ChatBot:
         print("ChatBot initialized.")
 
     def generate_response(self, prompt):
-        """
-        Send the completed prompt to Gemini
-        and return the generated text.
-        """
-
         if not prompt or not prompt.strip():
             raise ValueError("Prompt cannot be empty.")
 
         print("Sending prompt to Gemini...")
+        start_time = time.perf_counter()
 
-        response = self.client.interactions.create(
-            model=self.chat_model,
-            input=prompt,
-            store=False
-        )
+        try:
+            response = self.client.interactions.create(
+                model=self.chat_model,
+                input=prompt,
+                store=False,
+                generation_config={
+                    "thinking_level": "low",
+                    "max_output_tokens": 4096,
+                },
+            )
 
-        answer = response.output_text
+            elapsed = time.perf_counter() - start_time
 
-        if not answer:
+            print(
+                f"Gemini generation API time: {elapsed:.2f} seconds"
+            )
+
+        except Exception as ex:
+            elapsed = time.perf_counter() - start_time
+
+            print(
+                f"Gemini generation failed after "
+                f"{elapsed:.2f} seconds: "
+                f"{type(ex).__name__}: {ex}"
+            )
+            raise
+
+        status = getattr(response, "status", None)
+        answer = response.output_text or ""
+
+        print(f"Gemini response status: {status}")
+        print(f"Gemini output length: {len(answer)}")
+        print(f"Gemini output: {answer!r}")
+
+        if status == "incomplete":
+            raise RuntimeError(
+                "Gemini returned an incomplete response. "
+                "Check the output-token limit and response details."
+            )
+
+        if not answer.strip():
             raise ValueError("Gemini returned an empty response.")
 
         print("Response received from Gemini.")
-
         return answer
 
 
 if __name__ == "__main__":
-
     chatbot = ChatBot()
 
     test_prompt = """
-You are Lex, the AI Legal Assistant for NECS Legal.
+    You are Sujo, the AI Legal Assistant for NECS Legal.
 
-Answer the following question using the information provided.
+    Answer the visitor's question directly and concisely.
+    Do not return only a greeting.
+    Do not guarantee legal outcomes.
 
-Knowledge:
-NECS Legal provides Intellectual Property services including
-Trademarks, Patents, Industrial Designs, Anti-Counterfeiting,
-IP Litigation, Domain Names, Commercial IP, and Strategic IP Advisory.
+    Question:
+    Can NECS Legal guarantee that I will win my intellectual
+    property lawsuit?
+    """
 
-Question:
-What intellectual property services does NECS Legal provide?
-
-Answer professionally and concisely.
-"""
-
-    answer = chatbot.generate_response(test_prompt)
-
-    print()
-    print("=" * 70)
-    print("GEMINI RESPONSE")
-    print("=" * 70)
-    print(answer)
-    print()
-    print("=" * 70)
-    print("CHATBOT TEST COMPLETE")
-    print("=" * 70)
+    print(chatbot.generate_response(test_prompt))

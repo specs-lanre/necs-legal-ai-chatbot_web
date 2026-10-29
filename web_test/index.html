@@ -1,1681 +1,747 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>NECS Legal - Chat with Lex</title>
-
+    <title>NECS Legal - Chat with Sujo</title>
 
     <style>
-
-        /*
-        ============================================================
-        GLOBAL
-        ============================================================
-        */
+        :root {
+            --primary-color: #123b32;
+            --secondary-color: #1d5949;
+            --accent-color: #d6b36a;
+            --background-color: #ffffff;
+            --text-color: #24332f;
+            --muted-color: #687873;
+            --border-color: #e1e8e5;
+            --user-message-color: #123b32;
+            --bot-message-color: #f1f5f3;
+        }
 
         * {
             box-sizing: border-box;
         }
 
-
         body {
-
             margin: 0;
-
-            min-height: 100vh;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #f4f7fb,
-                    #e9eef5
-                );
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-
-        /*
-        ============================================================
-        FLOATING CHAT BUTTON
-        ============================================================
-        */
+        /* Floating launcher button */
 
         .lex-launcher {
-
             position: fixed;
-
-            right: 25px;
-            bottom: 25px;
-
-            width: 190px;
-            height: 64px;
-
-            border: none;
-
-            border-radius: 35px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #12355b,
-                    #1f5f8b
-                );
-
-            color: white;
-
+            right: 24px;
+            bottom: 24px;
+            z-index: 9998;
             display: flex;
-
             align-items: center;
-
-            justify-content: center;
-
             gap: 10px;
-
+            padding: 13px 19px;
+            border: none;
+            border-radius: 40px;
+            background: var(--primary-color);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-
-            box-shadow:
-                0 10px 30px
-                rgba(18, 53, 91, 0.30);
-
-            z-index: 1000;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.22);
+            transition: transform 0.2s, background 0.2s;
         }
-
 
         .lex-launcher:hover {
-
-            transform:
-                translateY(-4px);
-
-            box-shadow:
-                0 15px 35px
-                rgba(18, 53, 91, 0.38);
+            background: var(--secondary-color);
+            transform: translateY(-2px);
         }
 
-
-        /*
-        ============================================================
-        FLOATING ICON
-        ============================================================
-        */
-
-        .launcher-icon {
-
-            width: 42px;
-            height: 42px;
-
-            border-radius: 50%;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 23px;
-
-            background: white;
-
-            color: #12355b;
-
-            box-shadow:
-                0 4px 10px
-                rgba(0, 0, 0, 0.15);
-
-            animation:
-                floatingIcon 2.5s ease-in-out infinite;
+        .lex-launcher-icon {
+            font-size: 22px;
         }
 
+        /* Chat window */
 
-        @keyframes floatingIcon {
-
-            0%,
-            100% {
-
-                transform:
-                    translateY(0);
-
-            }
-
-            50% {
-
-                transform:
-                    translateY(-4px);
-
-            }
-        }
-
-
-        .launcher-text {
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: flex-start;
-
-            line-height: 1.1;
-        }
-
-
-        .launcher-main {
-
-            font-size: 15px;
-
-            font-weight: bold;
-        }
-
-
-        .launcher-sub {
-
-            font-size: 11px;
-
-            opacity: 0.80;
-
-            margin-top: 3px;
-        }
-
-
-        /*
-        ============================================================
-        CHAT WINDOW
-        ============================================================
-        */
-
-        .chat-window {
-
+        .lex-chat-window {
             position: fixed;
-
-            right: 25px;
-            bottom: 100px;
-
-            width: 380px;
-
-            height: 560px;
-
-            background: white;
-
-            border-radius: 18px;
-
-            overflow: hidden;
-
+            right: 24px;
+            bottom: 90px;
+            z-index: 9999;
             display: none;
-
             flex-direction: column;
-
-            box-shadow:
-                0 20px 60px
-                rgba(0, 0, 0, 0.22);
-
-            z-index: 999;
-
-            border:
-                1px solid
-                rgba(0, 0, 0, 0.08);
+            width: 380px;
+            max-width: calc(100vw - 32px);
+            height: 560px;
+            max-height: calc(100vh - 120px);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--background-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.20);
         }
 
-
-        .chat-window.open {
-
+        .lex-chat-window.open {
             display: flex;
-
-            animation:
-                chatOpen
-                0.25s ease;
         }
 
+        /* Header */
 
-        @keyframes chatOpen {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(20px)
-                    scale(0.97);
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
-        }
-
-
-        /*
-        ============================================================
-        CHAT HEADER
-        ============================================================
-        */
-
-        .chat-header {
-
-            min-height: 78px;
-
-            padding:
-                14px 16px;
-
+        .lex-chat-header {
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #12355b,
-                    #1f5f8b
-                );
-
-            color: white;
-        }
-
-
-        .lex-profile {
-
-            display: flex;
-
-            align-items: center;
-
             gap: 12px;
+            padding: 17px;
+            background: var(--primary-color);
+            color: #ffffff;
         }
 
+        .lex-header-info {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+        }
 
         .lex-avatar {
-
-            width: 48px;
-            height: 48px;
-
-            border-radius: 50%;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            font-size: 25px;
-
-            background: white;
-
-            color: #12355b;
-
-            box-shadow:
-                0 4px 10px
-                rgba(0, 0, 0, 0.15);
-        }
-
-
-        .lex-details {
-
-            display: flex;
-
-            flex-direction: column;
-        }
-
-
-        .lex-name {
-
-            font-size: 16px;
-
-            font-weight: bold;
-        }
-
-
-        .lex-title {
-
-            font-size: 11px;
-
-            opacity: 0.85;
-
-            margin-top: 4px;
-        }
-
-
-        .online-status {
-
-            font-size: 10px;
-
-            margin-top: 4px;
-
-            color: #d8ffd8;
-        }
-
-
-        .header-actions {
-
-            display: flex;
-
-            gap: 5px;
-        }
-
-
-        .header-button {
-
-            width: 34px;
-            height: 34px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.15);
-
-            color: white;
-
-            cursor: pointer;
-
-            font-size: 17px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            transition:
-                background 0.2s ease;
-        }
-
-
-        .header-button:hover {
-
-            background:
-                rgba(255, 255, 255, 0.28);
-        }
-
-
-        /*
-        ============================================================
-        MESSAGES
-        ============================================================
-        */
-
-        #messages {
-
-            flex: 1;
-
-            overflow-y: auto;
-
-            padding: 18px 15px;
-
-            background:
-                #f7f9fc;
-        }
-
-
-        .message {
-
-            margin-bottom: 15px;
-
-            display: flex;
-
-            flex-direction: column;
-        }
-
-
-        .message.user {
-
-            align-items: flex-end;
-        }
-
-
-        .message.lex {
-
-            align-items: flex-start;
-        }
-
-
-        .message-label {
-
-            font-size: 10px;
-
-            color: #777;
-
-            margin-bottom: 4px;
-
-            padding:
-                0 5px;
-        }
-
-
-        .message-bubble {
-
-            max-width: 84%;
-
-            padding:
-                11px 14px;
-
-            border-radius: 15px;
-
-            font-size: 13px;
-
-            line-height: 1.55;
-
-            white-space: pre-wrap;
-
-            word-wrap: break-word;
-        }
-
-
-        .user .message-bubble {
-
-            background:
-                #12355b;
-
-            color: white;
-
-            border-bottom-right-radius: 4px;
-        }
-
-
-        .lex .message-bubble {
-
-            background: white;
-
-            color: #252525;
-
-            border:
-                1px solid
-                #e1e5ea;
-
-            border-bottom-left-radius: 4px;
-
-            box-shadow:
-                0 2px 6px
-                rgba(0, 0, 0, 0.04);
-        }
-
-
-        /*
-        ============================================================
-        LEX SMALL AVATAR BESIDE MESSAGE
-        ============================================================
-        */
-
-        .lex-message-row {
-
-            display: flex;
-
-            align-items: flex-end;
-
-            gap: 7px;
-
-            max-width: 100%;
-        }
-
-
-        .small-lex-avatar {
-
-            width: 26px;
-            height: 26px;
-
-            border-radius: 50%;
-
             flex-shrink: 0;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            background:
-                #12355b;
-
-            color: white;
-
-            font-size: 14px;
-        }
-
-
-        /*
-        ============================================================
-        THINKING INDICATOR
-        ============================================================
-        */
-
-        .typing-wrapper {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-        }
-
-
-        .typing-text {
-
-            font-size: 12px;
-
-            color: #777;
-
-            font-style: italic;
-        }
-
-
-        .typing-dots {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 4px;
-        }
-
-
-        .typing-dot {
-
-            width: 6px;
-            height: 6px;
-
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-
-            background:
-                #6b7280;
-
-            animation:
-                typingAnimation
-                1.4s
-                infinite
-                ease-in-out;
+            background: rgba(255, 255, 255, 0.15);
+            font-size: 23px;
         }
 
-
-        .typing-dot:nth-child(2) {
-
-            animation-delay:
-                0.2s;
+        .lex-header-text {
+            min-width: 0;
         }
 
-
-        .typing-dot:nth-child(3) {
-
-            animation-delay:
-                0.4s;
+        .lex-header-text h3 {
+            margin: 0 0 4px;
+            font-size: 17px;
+            font-weight: 700;
         }
 
+        .lex-header-text p {
+            margin: 0;
+            color: #d9e6e0;
+            font-size: 12px;
+        }
 
-        @keyframes typingAnimation {
+        .lex-close-button {
+            flex-shrink: 0;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+        }
 
-            0%,
-            60%,
-            100% {
+        .lex-close-button:hover {
+            color: var(--accent-color);
+        }
 
-                transform:
-                    translateY(0);
+        /* Messages area */
 
-                opacity:
-                    0.35;
+        .lex-chat-messages {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 13px;
+            overflow-y: auto;
+            padding: 17px 14px;
+            background: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        .lex-message {
+            max-width: 88%;
+            padding: 11px 13px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.55;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .lex-message.bot {
+            align-self: flex-start;
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+            background: var(--bot-message-color);
+            color: var(--text-color);
+        }
+
+        .lex-message.user {
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            background: var(--user-message-color);
+            color: #ffffff;
+        }
+
+        .lex-message a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* Typing indicator */
+
+        .lex-typing {
+            align-self: flex-start;
+            padding: 10px 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bot-message-color);
+            color: var(--muted-color);
+            font-size: 12px;
+        }
+
+        .lex-typing-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 5px;
+        }
+
+        .lex-typing-dots span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--muted-color);
+            animation: typing 1.2s infinite ease-in-out;
+        }
+
+        .lex-typing-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .lex-typing-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.35;
+                transform: translateY(0);
             }
 
             30% {
-
-                transform:
-                    translateY(-5px);
-
-                opacity:
-                    1;
+                opacity: 1;
+                transform: translateY(-4px);
             }
         }
 
+        /* Input area */
 
-        /*
-        ============================================================
-        INPUT AREA
-        ============================================================
-        */
-
-        .chat-input-area {
-
-            padding:
-                12px;
-
-            background: white;
-
-            border-top:
-                1px solid
-                #e5e7eb;
+        .lex-chat-input-area {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
         }
 
-
-        .input-wrapper {
-
+        .lex-chat-form {
             display: flex;
-
-            align-items: center;
-
+            align-items: flex-end;
             gap: 8px;
-
-            background:
-                #f5f7fa;
-
-            border:
-                1px solid
-                #dfe4ea;
-
-            border-radius: 14px;
-
-            padding:
-                5px 6px 5px 13px;
         }
 
-
-        #question {
-
+        .lex-chat-input {
             flex: 1;
-
-            border: none;
-
-            outline: none;
-
-            background: transparent;
-
-            font-size: 13px;
-
             min-width: 0;
-
-            padding:
-                9px 0;
+            max-height: 100px;
+            resize: none;
+            padding: 12px;
+            border: 1px solid #d6dfdb;
+            border-radius: 10px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.4;
         }
 
-
-        #question::placeholder {
-
-            color: #999;
+        .lex-chat-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(29, 89, 73, 0.10);
         }
 
-
-        #sendButton {
-
-            width: 40px;
-            height: 40px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #12355b,
-                    #1f5f8b
-                );
-
-            color: white;
-
-            cursor: pointer;
-
+        .lex-send-button {
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            font-size: 17px;
-
             flex-shrink: 0;
-
-            transition:
-                transform 0.2s ease,
-                opacity 0.2s ease;
+            width: 43px;
+            height: 43px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: #ffffff;
+            font-size: 19px;
+            cursor: pointer;
         }
 
-
-        #sendButton:hover {
-
-            transform:
-                scale(1.08);
+        .lex-send-button:hover {
+            background: var(--secondary-color);
         }
 
-
-        #sendButton:disabled {
-
-            opacity:
-                0.5;
-
-            cursor:
-                not-allowed;
-
-            transform:
-                none;
+        .lex-send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
+        /* Disclaimer */
 
-        .input-note {
-
+        .lex-disclaimer {
+            margin: 9px 2px 0;
+            color: var(--muted-color);
+            font-size: 10px;
+            line-height: 1.45;
             text-align: center;
-
-            font-size: 9px;
-
-            color: #999;
-
-            margin-top: 7px;
         }
 
-
-        /*
-        ============================================================
-        SCROLLBAR
-        ============================================================
-        */
-
-        #messages::-webkit-scrollbar {
-
-            width: 6px;
+        .lex-disclaimer a {
+            color: var(--secondary-color);
+            text-decoration: none;
         }
 
-
-        #messages::-webkit-scrollbar-track {
-
-            background:
-                transparent;
+        .lex-disclaimer a:hover {
+            text-decoration: underline;
         }
 
+        /* Mobile layout */
 
-        #messages::-webkit-scrollbar-thumb {
-
-            background:
-                #cbd5e1;
-
-            border-radius:
-                10px;
-        }
-
-
-        /*
-        ============================================================
-        MOBILE
-        ============================================================
-        */
-
-        @media (max-width: 600px) {
-
-            .chat-window {
-
-                right: 10px;
-                bottom: 85px;
-
-                width:
-                    calc(100vw - 20px);
-
-                height:
-                    75vh;
-
-                max-height:
-                    600px;
-            }
-
-
+        @media (max-width: 480px) {
             .lex-launcher {
-
                 right: 15px;
                 bottom: 15px;
+                padding: 12px 16px;
+            }
 
-                width: 175px;
+            .lex-chat-window {
+                right: 8px;
+                bottom: 76px;
+                width: calc(100vw - 16px);
+                max-width: none;
+                height: min(560px, calc(100vh - 95px));
+                max-height: none;
             }
         }
-
-
-        /*
-        ============================================================
-        VERY SMALL SCREENS
-        ============================================================
-        */
-
-        @media (max-width: 400px) {
-
-            .chat-window {
-
-                right: 5px;
-
-                width:
-                    calc(100vw - 10px);
-            }
-
-
-            .message-bubble {
-
-                max-width:
-                    90%;
-            }
-        }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-    <!--
-    ============================================================
-    FLOATING CHAT LAUNCHER
-    ============================================================
-    -->
+    <!-- Floating chat launcher -->
 
     <button
+        type="button"
         class="lex-launcher"
         id="lexLauncher"
-        aria-label="Chat with Lex"
+        aria-label="Open chat with Sujo"
+        aria-expanded="false"
+        aria-controls="lexChatWindow"
     >
-
-        <div class="launcher-icon">
-            ⚖️
-        </div>
-
-        <div class="launcher-text">
-
-            <div class="launcher-main">
-                Chat with Lex
-            </div>
-
-            <div class="launcher-sub">
-                AI Legal Assistant
-            </div>
-
-        </div>
-
+        <span class="lex-launcher-icon">⚖️</span>
+        <span>Chat with Sujo</span>
     </button>
 
+    <!-- Chat window -->
 
-    <!--
-    ============================================================
-    CHAT WINDOW
-    ============================================================
-    -->
-
-    <div
-        class="chat-window"
-        id="chatWindow"
+    <section
+        class="lex-chat-window"
+        id="lexChatWindow"
+        role="dialog"
+        aria-label="Chat with Sujo, NECS Legal AI Assistant"
+        aria-modal="false"
     >
 
-        <!-- HEADER -->
+        <!-- Header -->
 
-        <div class="chat-header">
+        <header class="lex-chat-header">
+            <div class="lex-header-info">
+                <div class="lex-avatar">⚖️</div>
 
-            <div class="lex-profile">
-
-                <div class="lex-avatar">
-                    ⚖️
+                <div class="lex-header-text">
+                    <h3>Sujo</h3>
+                    <p>AI Legal Assistant for NECS Legal</p>
                 </div>
-
-                <div class="lex-details">
-
-                    <div class="lex-name">
-                        Lex
-                    </div>
-
-                    <div class="lex-title">
-                        AI Legal Assistant
-                    </div>
-
-                    <div class="online-status">
-                        ● Online
-                    </div>
-
-                </div>
-
             </div>
 
+            <button
+                type="button"
+                class="lex-close-button"
+                id="lexCloseButton"
+                aria-label="Close chat"
+            >
+                &times;
+            </button>
+        </header>
 
-            <div class="header-actions">
+        <!-- Conversation messages -->
 
-                <button
-                    class="header-button"
-                    id="minimizeButton"
-                    title="Minimize"
-                    aria-label="Minimize chat"
-                >
-                    −
-                </button>
+        <div
+            class="lex-chat-messages"
+            id="lexChatMessages"
+            aria-live="polite"
+            aria-relevant="additions"
+        >
+            <div class="lex-message bot">
+                Hello! I'm Sujo, the AI Legal Assistant for NECS Legal.
 
+                I can help you learn about our legal services, intellectual property practice areas, and general legal information.
 
-                <button
-                    class="header-button"
-                    id="closeButton"
-                    title="Close"
-                    aria-label="Close chat"
-                >
-                    ×
-                </button>
-
+                How may I assist you today?
             </div>
-
         </div>
 
+        <!-- Input form -->
 
-        <!-- MESSAGES -->
+        <div class="lex-chat-input-area">
+            <form class="lex-chat-form" id="lexChatForm">
 
-        <div id="messages">
-
-
-            <!-- Initial Lex greeting -->
-
-            <div class="message lex">
-
-                <div class="message-label">
-                    Lex
-                </div>
-
-                <div class="lex-message-row">
-
-                    <div class="small-lex-avatar">
-                        ⚖️
-                    </div>
-
-                    <div class="message-bubble">
-
-Hello! I'm Lex, the AI Legal Assistant for NECS Legal.
-
-How can I help you today?
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- INPUT -->
-
-        <div class="chat-input-area">
-
-            <div class="input-wrapper">
-
-                <input
-                    type="text"
-                    id="question"
-                    placeholder="Ask a legal enquiry..."
-                    autocomplete="off"
-                >
-
+                <textarea
+                    class="lex-chat-input"
+                    id="lexChatInput"
+                    rows="1"
+                    maxlength="3000"
+                    placeholder="Type your question..."
+                    aria-label="Type your question"
+                    required
+                ></textarea>
 
                 <button
-                    id="sendButton"
-                    title="Send legal enquiry"
-                    aria-label="Send legal enquiry"
+                    type="submit"
+                    class="lex-send-button"
+                    id="lexSendButton"
+                    aria-label="Send message"
                 >
                     ➤
                 </button>
 
-            </div>
+            </form>
 
-
-            <div class="input-note">
-
-                Lex provides general information, not personalized legal advice.
-
-            </div>
-
+            <p class="lex-disclaimer">
+                Sujo provides general information, not personalized legal advice.
+                For assistance with your specific matter, contact NECS Legal at
+                <a href="tel:+2348107251119">+234 810 725 1119</a> or
+                <a href="mailto:info@necs-legal.com">info@necs-legal.com</a>.
+            </p>
         </div>
 
-    </div>
-
+    </section>
 
     <script>
-
-
         /*
-        ============================================================
-        FASTAPI CHAT ENDPOINT
-        ============================================================
- */
-
+         * LOCAL DEVELOPMENT API
+         *
+         * This URL works when:
+         * 1. FastAPI is running on your computer on port 8000.
+         * 2. You are testing the widget on the same computer.
+         *
+         * After deploying the API to Render, replace this URL with
+         * your actual Render URL followed by /chat.
+         */
+        const API_URL = "http://127.0.0.1:8000/chat";
+/*
 const API_URL="https://necs-legal-ai-chatbot-web.onrender.com/api/chat";
+*/
+        /*
+         * Get page elements
+         */
+        const launcher = document.getElementById("lexLauncher");
+        const chatWindow = document.getElementById("lexChatWindow");
+        const closeButton = document.getElementById("lexCloseButton");
+        const chatMessages = document.getElementById("lexChatMessages");
+        const chatForm = document.getElementById("lexChatForm");
+        const chatInput = document.getElementById("lexChatInput");
+        const sendButton = document.getElementById("lexSendButton");
+
+        let isSending = false;
 
         /*
-        ============================================================
-        GET HTML ELEMENTS
-        ============================================================
-        */
-
-        const lexLauncher =
-            document.getElementById("lexLauncher");
-
-
-        const chatWindow =
-            document.getElementById("chatWindow");
-
-
-        const closeButton =
-            document.getElementById("closeButton");
-
-
-        const minimizeButton =
-            document.getElementById("minimizeButton");
-
-
-        const messages =
-            document.getElementById("messages");
-
-
-        const questionInput =
-            document.getElementById("question");
-
-
-        const sendButton =
-            document.getElementById("sendButton");
-
-
-        /*
-        ============================================================
-        OPEN CHAT
-        ============================================================
-        */
-
+         * Open chat window
+         */
         function openChat() {
-
             chatWindow.classList.add("open");
-
-            lexLauncher.style.display =
-                "none";
-
-            questionInput.focus();
+            launcher.setAttribute("aria-expanded", "true");
+            chatInput.focus();
         }
 
-
         /*
-        ============================================================
-        CLOSE CHAT
-        ============================================================
-        */
-
+         * Close chat window
+         */
         function closeChat() {
-
             chatWindow.classList.remove("open");
-
-            lexLauncher.style.display =
-                "flex";
+            launcher.setAttribute("aria-expanded", "false");
         }
 
-
-        /*
-        ============================================================
-        MINIMIZE CHAT
-        ============================================================
-        */
-
-        function minimizeChat() {
-
-            chatWindow.classList.remove("open");
-
-            lexLauncher.style.display =
-                "flex";
-        }
-
-
-        /*
-        ============================================================
-        ADD USER MESSAGE
-        ============================================================
-        */
-
-        function addUserMessage(text) {
-
-            const message =
-                document.createElement("div");
-
-            message.className =
-                "message user";
-
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "message-label";
-
-            label.textContent =
-                "You";
-
-
-            const bubble =
-                document.createElement("div");
-
-            bubble.className =
-                "message-bubble";
-
-            bubble.textContent =
-                text;
-
-
-            message.appendChild(label);
-
-            message.appendChild(bubble);
-
-            messages.appendChild(message);
-
-
-            scrollToBottom();
-        }
-
-
-        /*
-        ============================================================
-        ADD LEX MESSAGE
-        ============================================================
-        */
-
-        function addLexMessage(text) {
-
-            const message =
-                document.createElement("div");
-
-            message.className =
-                "message lex";
-
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "message-label";
-
-            label.textContent =
-                "Lex";
-
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "lex-message-row";
-
-
-            const avatar =
-                document.createElement("div");
-
-            avatar.className =
-                "small-lex-avatar";
-
-            avatar.textContent =
-                "⚖️";
-
-
-            const bubble =
-                document.createElement("div");
-
-            bubble.className =
-                "message-bubble";
-
-            bubble.textContent =
-                text;
-
-
-            row.appendChild(avatar);
-
-            row.appendChild(bubble);
-
-
-            message.appendChild(label);
-
-            message.appendChild(row);
-
-
-            messages.appendChild(message);
-
-
-            scrollToBottom();
-        }
-
-
-        /*
-        ============================================================
-        SHOW THINKING INDICATOR
-        ============================================================
-        */
-
-        function showTypingIndicator() {
-
-
-            if (
-                document.getElementById(
-                    "typingIndicator"
-                )
-            ) {
-
-                return;
+        launcher.addEventListener("click", function () {
+            if (chatWindow.classList.contains("open")) {
+                closeChat();
+            } else {
+                openChat();
             }
+        });
 
+        closeButton.addEventListener("click", closeChat);
 
-            const message =
-                document.createElement("div");
+        /*
+         * Add a message to the conversation.
+         *
+         * textContent is used so that user questions and API responses
+         * are displayed as text rather than interpreted as HTML.
+         */
+        function addLexMessage(message, sender = "bot") {
+            const messageElement = document.createElement("div");
 
-            message.className =
-                "message lex";
+            messageElement.className = "lex-message " + sender;
+            messageElement.textContent = message;
 
-            message.id =
-                "typingIndicator";
-
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "message-label";
-
-            label.textContent =
-                "Lex";
-
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "lex-message-row";
-
-
-            const avatar =
-                document.createElement("div");
-
-            avatar.className =
-                "small-lex-avatar";
-
-            avatar.textContent =
-                "⚖️";
-
-
-            const bubble =
-                document.createElement("div");
-
-            bubble.className =
-                "message-bubble";
-
-
-            const typingWrapper =
-                document.createElement("div");
-
-            typingWrapper.className =
-                "typing-wrapper";
-
-
-            const typingText =
-                document.createElement("span");
-
-            typingText.className =
-                "typing-text";
-
-            typingText.textContent =
-                "Lex is thinking";
-
-
-            const dots =
-                document.createElement("div");
-
-            dots.className =
-                "typing-dots";
-
-
-            for (
-                let i = 0;
-                i < 3;
-                i++
-            ) {
-
-                const dot =
-                    document.createElement("span");
-
-                dot.className =
-                    "typing-dot";
-
-                dots.appendChild(dot);
-            }
-
-
-            typingWrapper.appendChild(
-                typingText
-            );
-
-            typingWrapper.appendChild(
-                dots
-            );
-
-
-            bubble.appendChild(
-                typingWrapper
-            );
-
-
-            row.appendChild(
-                avatar
-            );
-
-            row.appendChild(
-                bubble
-            );
-
-
-            message.appendChild(
-                label
-            );
-
-            message.appendChild(
-                row
-            );
-
-
-            messages.appendChild(
-                message
-            );
-
-
+            chatMessages.appendChild(messageElement);
             scrollToBottom();
+
+            return messageElement;
         }
 
-
         /*
-        ============================================================
-        REMOVE THINKING INDICATOR
-        ============================================================
-        */
-
-        function removeTypingIndicator() {
-
-            const indicator =
-                document.getElementById(
-                    "typingIndicator"
-                );
-
-
-            if (indicator) {
-
-                indicator.remove();
-            }
-        }
-
-
-        /*
-        ============================================================
-        SCROLL TO BOTTOM
-        ============================================================
-        */
-
+         * Scroll to the newest message
+         */
         function scrollToBottom() {
-
-            messages.scrollTop =
-                messages.scrollHeight;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        /*
+         * Show typing indicator
+         */
+        function showTypingIndicator() {
+            const typingElement = document.createElement("div");
+
+            typingElement.className = "lex-typing";
+            typingElement.id = "lexTypingIndicator";
+
+            typingElement.innerHTML =
+                'Sujo is typing' +
+                '<span class="lex-typing-dots">' +
+                    '<span></span><span></span><span></span>' +
+                '</span>';
+
+            chatMessages.appendChild(typingElement);
+            scrollToBottom();
+        }
 
         /*
-        ============================================================
-        SEND QUESTION
-        ============================================================
-        */
+         * Remove typing indicator
+         */
+        function removeTypingIndicator() {
+            const typingElement =
+                document.getElementById("lexTypingIndicator");
 
-        async function sendQuestion() {
+            if (typingElement) {
+                typingElement.remove();
+            }
+        }
 
+        /*
+         * Extract a readable error from FastAPI responses
+         */
+        function getReadableError(data, status) {
+            if (data && typeof data.detail === "string") {
+                return data.detail;
+            }
 
-            const question =
-                questionInput.value.trim();
+            if (data && Array.isArray(data.detail)) {
+                return data.detail
+                    .map(function (item) {
+                        return item.msg || JSON.stringify(item);
+                    })
+                    .join("; ");
+            }
 
+            if (data && typeof data.message === "string") {
+                return data.message;
+            }
 
-            /*
-            Empty question
-            */
+            if (data && typeof data.error === "string") {
+                return data.error;
+            }
 
-            if (!question) {
+            return "The server returned HTTP " + status + ".";
+        }
 
-                questionInput.focus();
-
+        /*
+         * Send the question to the FastAPI backend
+         */
+        async function sendQuestion(question) {
+            if (isSending) {
                 return;
             }
 
-
-            /*
-            Add user's question
-            */
-
-            addUserMessage(question);
-
-
-            /*
-            Clear input
-            */
-
-            questionInput.value =
-                "";
-
-
-            /*
-            Disable send button
-            */
-
-            sendButton.disabled =
-                true;
-
-
-            /*
-            Show loader
-            */
+            isSending = true;
+            sendButton.disabled = true;
+            chatInput.disabled = true;
 
             showTypingIndicator();
 
-
             try {
+                /*
+                 * Send the question using the field expected by api.py.
+                 *
+                 * Correct request:
+                 * {
+                 *     "question": "Your question"
+                 * }
+                 */
+                const response = await fetch(API_URL, {
+                    method: "POST",
 
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        question: question
+                    })
+                });
 
                 /*
-                Send request to FastAPI
-                */
+                 * Read the response safely
+                 */
+                let data;
 
-                const response =
-                    await fetch(
-                        API_URL,
-                        {
-
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            /*body:
-                                JSON.stringify({
-                                    question:
-                                        question
-                                })*/
-                                
-							body:
-					JSON.stringify({
-						message:
-							question
-					})      
-												
-												
-                                
-                                
-                        }
-                    );
-
-
-                /*
-                Convert response to JSON
-                */
-
-                const data =
-                    await response.json();
-
-
-                /*
-                Remove loader
-                */
-
-                removeTypingIndicator();
-
-
-                /*
-                Check HTTP status
-                */
-
-                if (!response.ok) {
-
+                try {
+                    data = await response.json();
+                } catch (jsonError) {
                     throw new Error(
-                        data.detail ||
-                        "Request failed."
+                        "The server did not return valid JSON. " +
+                        "Please check the API endpoint."
                     );
                 }
 
+                /*
+                 * Handle unsuccessful HTTP responses
+                 */
+                if (!response.ok) {
+                    throw new Error(
+                        getReadableError(data, response.status)
+                    );
+                }
 
                 /*
-                Show Lex answer
-                */
-
-               /* addLexMessage(
-                    data.answer
-                );
-                */
-                
-                
-                addLexMessage( data.reply);
-
-
-            }
-
-            catch (error) {
-
+                 * The working FastAPI endpoint returns data.answer,
+                 * not data.reply.
+                 */
+                if (
+                    !data ||
+                    typeof data.answer !== "string" ||
+                    data.answer.trim() === ""
+                ) {
+                    throw new Error(
+                        "The API response did not contain a valid answer field. " +
+                        "Please check the response returned by api.py."
+                    );
+                }
 
                 /*
-                Remove loader
-                */
+                 * Display the chatbot's answer
+                 */
+                addLexMessage(data.answer, "bot");
 
+            } catch (error) {
+                console.error("Sujo chatbot request failed:", error);
+
+                let errorMessage =
+                    "Sorry, I couldn't connect to the chatbot.";
+
+                if (error && error.message) {
+                    errorMessage += "\n\nDetails: " + error.message;
+                }
+
+                errorMessage +=
+                    "\n\nPlease try again. If the problem continues, " +
+                    "contact NECS Legal at info@necs-legal.com.";
+
+                addLexMessage(errorMessage, "bot");
+
+            } finally {
                 removeTypingIndicator();
 
-
-                /*
-                Show error
-                */
-
-                addLexMessage(
-                    "Sorry, I couldn't connect to the chatbot.\n\n" +
-                    error.message
-                );
-
-
+                isSending = false;
+                sendButton.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
             }
-
-            finally {
-
-
-                /*
-                Re-enable send button
-                */
-
-                sendButton.disabled =
-                    false;
-
-
-                /*
-                Focus input
-                */
-
-                questionInput.focus();
-
-            }
-
         }
 
-
         /*
-        ============================================================
-        EVENT LISTENERS
-        ============================================================
-        */
+         * Handle form submission
+         */
+        chatForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
 
+            const question = chatInput.value.trim();
 
-        /*
-        Open chat
-        */
-
-        lexLauncher.addEventListener(
-            "click",
-            openChat
-        );
-
-
-        /*
-        Close chat
-        */
-
-        closeButton.addEventListener(
-            "click",
-            closeChat
-        );
-
-
-        /*
-        Minimize chat
-        */
-
-        minimizeButton.addEventListener(
-            "click",
-            minimizeChat
-        );
-
-
-        /*
-        Send button
-        */
-
-        sendButton.addEventListener(
-            "click",
-            sendQuestion
-        );
-
-
-        /*
-        Press Enter to send
-        */
-
-        questionInput.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key ===
-                    "Enter"
-                ) {
-
-                    event.preventDefault();
-
-                    sendQuestion();
-                }
-
+            if (!question || isSending) {
+                return;
             }
-        );
 
+            /*
+             * Display the visitor's message
+             */
+            addLexMessage(question, "user");
 
+            /*
+             * Clear the input
+             */
+            chatInput.value = "";
+            chatInput.style.height = "auto";
+
+            /*
+             * Send question to the backend
+             */
+            await sendQuestion(question);
+        });
+
+        /*
+         * Allow Enter to send.
+         * Shift + Enter creates a new line.
+         */
+        chatInput.addEventListener("keydown", function (event) {
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey &&
+                !event.isComposing
+            ) {
+                event.preventDefault();
+                chatForm.requestSubmit();
+            }
+        });
+
+        /*
+         * Automatically grow the input as the visitor types
+         */
+        chatInput.addEventListener("input", function () {
+            chatInput.style.height = "auto";
+
+            chatInput.style.height =
+                Math.min(chatInput.scrollHeight, 100) + "px";
+        });
+
+        /*
+         * Close the widget when Escape is pressed
+         */
+        document.addEventListener("keydown", function (event) {
+            if (
+                event.key === "Escape" &&
+                chatWindow.classList.contains("open")
+            ) {
+                closeChat();
+            }
+        });
     </script>
 
-
 </body>
-
 </html>
+```
