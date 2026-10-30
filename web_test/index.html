@@ -8,9 +8,6 @@
     <title>NECS Legal - Chat with Sujo</title>
 
     <style>
-		
-		
-	
         :root {
             --primary-color: #123b32;
             --secondary-color: #1d5949;
@@ -27,12 +24,53 @@
             box-sizing: border-box;
         }
 
+        html,
         body {
+            width: 100%;
+            height: 100%;
             margin: 0;
+            padding: 0;
+            overflow: hidden;
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        /* Floating launcher button */
+        body {
+            background: var(--background-color);
+        }
+
+        /* =================================
+           WORDPRESS EMBED MODE
+           ================================= */
+
+        /* WordPress supplies the floating button */
+        #lexLauncher {
+            display: none !important;
+        }
+
+        /* Fill the WordPress iframe */
+        #lexChatWindow {
+            position: relative !important;
+            inset: auto !important;
+            display: flex !important;
+            flex-direction: column;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            max-height: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            overflow: hidden;
+        }
+
+        /* WordPress supplies its own popup header */
+        #lexChatWindow .lex-chat-header {
+            display: none !important;
+        }
+
+        /* =================================
+           ORIGINAL CHAT WINDOW
+           ================================= */
 
         .lex-launcher {
             position: fixed;
@@ -50,20 +88,7 @@
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.22);
-            transition: transform 0.2s, background 0.2s;
         }
-
-        .lex-launcher:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
-
-        .lex-launcher-icon {
-            font-size: 22px;
-        }
-
-        /* Chat window */
 
         .lex-chat-window {
             position: fixed;
@@ -87,7 +112,9 @@
             display: flex;
         }
 
-        /* Header */
+        /* =================================
+           CHAT HEADER
+           ================================= */
 
         .lex-chat-header {
             display: flex;
@@ -144,17 +171,16 @@
             cursor: pointer;
         }
 
-        .lex-close-button:hover {
-            color: var(--accent-color);
-        }
-
-        /* Messages area */
+        /* =================================
+           CHAT MESSAGES
+           ================================= */
 
         .lex-chat-messages {
             display: flex;
             flex: 1;
             flex-direction: column;
             gap: 13px;
+            min-height: 0;
             overflow-y: auto;
             padding: 17px 14px;
             background: #ffffff;
@@ -191,7 +217,9 @@
             text-decoration: underline;
         }
 
-        /* Typing indicator */
+        /* =================================
+           TYPING INDICATOR
+           ================================= */
 
         .lex-typing {
             align-self: flex-start;
@@ -237,9 +265,12 @@
             }
         }
 
-        /* Input area */
+        /* =================================
+           INPUT AREA
+           ================================= */
 
         .lex-chat-input-area {
+            flex-shrink: 0;
             padding: 12px;
             border-top: 1px solid var(--border-color);
             background: #ffffff;
@@ -294,26 +325,66 @@
             cursor: not-allowed;
         }
 
-        /* Disclaimer */
+        /* =================================
+           DISCLAIMER AND CONTACT DETAILS
+           ================================= */
 
         .lex-disclaimer {
             margin: 9px 2px 0;
+            padding: 5px 8px;
             color: var(--muted-color);
-            font-size: 10px;
-            line-height: 1.45;
+            font-size: 11px;
+            line-height: 1.5;
             text-align: center;
         }
 
-        .lex-disclaimer a {
-            color: var(--secondary-color);
-            text-decoration: none;
+        .lex-disclaimer-text {
+            margin: 0 0 10px;
         }
 
-        .lex-disclaimer a:hover {
+        .lex-contact-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lex-contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 9px;
+            color: var(--secondary-color);
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .lex-contact-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .lex-contact-icon svg {
+            display: block;
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+        }
+
+        .lex-contact-link:hover {
+            color: var(--accent-color);
             text-decoration: underline;
         }
 
-        /* Mobile layout */
+        /* =================================
+           MOBILE RESPONSIVENESS
+           ================================= */
 
         @media (max-width: 480px) {
             .lex-launcher {
@@ -330,64 +401,28 @@
                 height: min(560px, calc(100vh - 95px));
                 max-height: none;
             }
+
+            .lex-chat-input-area {
+                padding: 10px;
+            }
+
+            .lex-disclaimer {
+                font-size: 10px;
+            }
+
+            .lex-contact-link {
+                font-size: 11px;
+            }
         }
-        
-        
-        
-        
-        
-        
-        
-        /* =================================
-   SUJO WORDPRESS EMBED MODE
-   ================================= */
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-/* Hide the original floating launcher.
-   WordPress already provides one. */
-#lexLauncher {
-    display: none !important;
-}
-
-/* The WordPress widget supplies the
-   outer popup and its dimensions. */
-#lexChatWindow {
-    position: relative !important;
-    inset: auto !important;
-    display: flex !important;
-    flex-direction: column;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    max-height: none !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-/* WordPress already displays the title
-   in its own popup header. */
-#lexChatWindow .lex-chat-header {
-    display: none !important;
-}
-	
-		
-	
-	
-	
     </style>
 </head>
 
 <body>
 
-    <!-- Floating chat launcher -->
+    <!-- =================================
+         FLOATING CHAT LAUNCHER
+         Hidden in WordPress embed mode
+         ================================= -->
 
     <button
         type="button"
@@ -401,7 +436,9 @@ body {
         <span>Chat with Sujo</span>
     </button>
 
-    <!-- Chat window -->
+    <!-- =================================
+         CHAT WINDOW
+         ================================= -->
 
     <section
         class="lex-chat-window"
@@ -411,16 +448,19 @@ body {
         aria-modal="false"
     >
 
-        <!-- Header -->
+        <!-- CHAT HEADER -->
 
         <header class="lex-chat-header">
+
             <div class="lex-header-info">
+
                 <div class="lex-avatar">⚖️</div>
 
                 <div class="lex-header-text">
                     <h3>Sujo</h3>
                     <p>AI Legal Assistant for NECS Legal</p>
                 </div>
+
             </div>
 
             <button
@@ -431,9 +471,10 @@ body {
             >
                 &times;
             </button>
+
         </header>
 
-        <!-- Conversation messages -->
+        <!-- CONVERSATION MESSAGES -->
 
         <div
             class="lex-chat-messages"
@@ -441,6 +482,7 @@ body {
             aria-live="polite"
             aria-relevant="additions"
         >
+
             <div class="lex-message bot">
                 Hello! I'm Sujo, the AI Legal Assistant for NECS Legal.
 
@@ -448,11 +490,13 @@ body {
 
                 How may I assist you today?
             </div>
+
         </div>
 
-        <!-- Input form -->
+        <!-- INPUT AREA -->
 
         <div class="lex-chat-input-area">
+
             <form class="lex-chat-form" id="lexChatForm">
 
                 <textarea
@@ -476,241 +520,444 @@ body {
 
             </form>
 
-            <p class="lex-disclaimer">
-                Sujo provides general information, not personalized legal advice.
-                For assistance with your specific matter, contact NECS Legal at
-                <a href="tel:+2348107251119">+234 810 725 1119</a> or
-                <a href="mailto:info@necs-legal.com">info@necs-legal.com</a>.
-            </p>
+            <!-- =================================
+                 DISCLAIMER AND CONTACT INFORMATION
+                 ================================= -->
+
+            <div class="lex-disclaimer">
+
+                <p class="lex-disclaimer-text">
+                    Sujo provides general information, not personalized
+                    legal advice. For assistance with your specific matter,
+                    please contact NECS Legal:
+                </p>
+
+                <div class="lex-contact-links">
+
+                    <!-- PHONE CONTACT -->
+
+                    <a
+                        href="tel:+2348107251119"
+                        class="lex-contact-link"
+                        aria-label="Call NECS Legal"
+                    >
+
+                        <span class="lex-contact-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.19 2.46.56 3.58a1 1 0 01-.25 1.01l-2.19 2.2z"/>
+                            </svg>
+                        </span>
+
+                        <span>+234 810 725 1119</span>
+
+                    </a>
+
+                    <!-- WHATSAPP CONTACT -->
+
+                    <a
+                        href="https://wa.me/2348107251119"
+                        class="lex-contact-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Chat with NECS Legal on WhatsApp"
+                    >
+
+                        <span class="lex-contact-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.52 3.48A11.82 11.82 0 0012.08 0C5.55 0 .24 5.3.23 11.83c0 2.08.54 4.12 1.57 5.91L0 24l6.41-1.68a11.8 11.8 0 005.66 1.44h.01c6.53 0 11.84-5.31 11.84-11.84a11.77 11.77 0 00-3.4-8.44zM12.08 21.75h-.01a9.85 9.85 0 01-5.02-1.37l-.36-.21-3.8 1 1.02-3.7-.23-.38a9.84 9.84 0 01-1.51-5.26c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 017.02 2.91 9.87 9.87 0 012.9 7.02c0 5.47-4.45 9.91-9.93 9.91zm5.44-7.42c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.23-.65.08-.3-.15-1.27-.47-2.42-1.5-.89-.79-1.5-1.77-1.68-2.07-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.64-.93-2.24-.24-.59-.49-.51-.68-.52h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.51 0 1.48 1.08 2.91 1.23 3.11.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.12-.28-.2-.58-.35z"/>
+                            </svg>
+                        </span>
+
+                        <span>WhatsApp: +234 810 725 1119</span>
+
+                    </a>
+
+                    <!-- EMAIL CONTACT -->
+
+                    <a
+                        href="mailto:info@necs-legal.com"
+                        class="lex-contact-link"
+                        aria-label="Email NECS Legal"
+                    >
+
+                        <span class="lex-contact-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </span>
+
+                        <span>info@necs-legal.com</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
     </section>
 
+    <!-- =================================
+         CHATBOT JAVASCRIPT
+         ================================= -->
+
     <script>
-        /*
-         * LOCAL DEVELOPMENT API
-         *
-         * This URL works when:
-         * 1. FastAPI is running on your computer on port 8000.
-         * 2. You are testing the widget on the same computer.
-         *
-         * After deploying the API to Render, replace this URL with
-         * your actual Render URL followed by /chat.
-         this file has been modified
-         */        
-
-const API_URL="https://necs-legal-ai-chatbot-web.onrender.com/api/chat";
 
         /*
-         * Get page elements
+         * FASTAPI BACKEND ENDPOINT
          */
-        const launcher = document.getElementById("lexLauncher");
-        const chatWindow = document.getElementById("lexChatWindow");
-        const closeButton = document.getElementById("lexCloseButton");
-        const chatMessages = document.getElementById("lexChatMessages");
-        const chatForm = document.getElementById("lexChatForm");
-        const chatInput = document.getElementById("lexChatInput");
-        const sendButton = document.getElementById("lexSendButton");
+
+        const API_URL =
+            "https://necs-legal-ai-chatbot-web.onrender.com/api/chat";
+
+
+        /*
+         * GET PAGE ELEMENTS
+         */
+
+        const launcher =
+            document.getElementById("lexLauncher");
+
+        const chatWindow =
+            document.getElementById("lexChatWindow");
+
+        const closeButton =
+            document.getElementById("lexCloseButton");
+
+        const chatMessages =
+            document.getElementById("lexChatMessages");
+
+        const chatForm =
+            document.getElementById("lexChatForm");
+
+        const chatInput =
+            document.getElementById("lexChatInput");
+
+        const sendButton =
+            document.getElementById("lexSendButton");
 
         let isSending = false;
 
+
         /*
-         * Open chat window
+         * OPEN CHAT WINDOW
          */
+
         function openChat() {
+
             chatWindow.classList.add("open");
-            launcher.setAttribute("aria-expanded", "true");
+
+            launcher.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
             chatInput.focus();
         }
 
+
         /*
-         * Close chat window
+         * CLOSE CHAT WINDOW
          */
+
         function closeChat() {
+
             chatWindow.classList.remove("open");
-            launcher.setAttribute("aria-expanded", "false");
+
+            launcher.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
         }
 
-        launcher.addEventListener("click", function () {
-            if (chatWindow.classList.contains("open")) {
-                closeChat();
-            } else {
-                openChat();
-            }
-        });
-
-        closeButton.addEventListener("click", closeChat);
 
         /*
-         * Add a message to the conversation.
-         *
-         * textContent is used so that user questions and API responses
-         * are displayed as text rather than interpreted as HTML.
+         * LAUNCHER BUTTON EVENT
          */
-        function addLexMessage(message, sender = "bot") {
-            const messageElement = document.createElement("div");
 
-            messageElement.className = "lex-message " + sender;
+        launcher.addEventListener("click", function () {
+
+            if (chatWindow.classList.contains("open")) {
+
+                closeChat();
+
+            } else {
+
+                openChat();
+
+            }
+
+        });
+
+
+        /*
+         * CLOSE BUTTON EVENT
+         */
+
+        closeButton.addEventListener(
+            "click",
+            closeChat
+        );
+
+
+        /*
+         * ADD MESSAGE TO CONVERSATION
+         */
+
+        function addLexMessage(message, sender = "bot") {
+
+            const messageElement =
+                document.createElement("div");
+
+            messageElement.className =
+                "lex-message " + sender;
+
             messageElement.textContent = message;
 
             chatMessages.appendChild(messageElement);
+
             scrollToBottom();
 
             return messageElement;
         }
 
+
         /*
-         * Scroll to the newest message
+         * SCROLL TO BOTTOM
          */
+
         function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            chatMessages.scrollTop =
+                chatMessages.scrollHeight;
+
         }
 
+
         /*
-         * Show typing indicator
+         * SHOW TYPING INDICATOR
          */
+
         function showTypingIndicator() {
-            const typingElement = document.createElement("div");
+
+            const typingElement =
+                document.createElement("div");
 
             typingElement.className = "lex-typing";
+
             typingElement.id = "lexTypingIndicator";
 
             typingElement.innerHTML =
                 'Sujo is typing' +
                 '<span class="lex-typing-dots">' +
-                    '<span></span><span></span><span></span>' +
+                    '<span></span>' +
+                    '<span></span>' +
+                    '<span></span>' +
                 '</span>';
 
             chatMessages.appendChild(typingElement);
+
             scrollToBottom();
+
         }
 
+
         /*
-         * Remove typing indicator
+         * REMOVE TYPING INDICATOR
          */
+
         function removeTypingIndicator() {
+
             const typingElement =
-                document.getElementById("lexTypingIndicator");
+                document.getElementById(
+                    "lexTypingIndicator"
+                );
 
             if (typingElement) {
+
                 typingElement.remove();
+
             }
+
         }
 
+
         /*
-         * Extract a readable error from FastAPI responses
+         * EXTRACT READABLE ERROR
          */
+
         function getReadableError(data, status) {
-            if (data && typeof data.detail === "string") {
+
+            if (
+                data &&
+                typeof data.detail === "string"
+            ) {
+
                 return data.detail;
+
             }
 
-            if (data && Array.isArray(data.detail)) {
+            if (
+                data &&
+                Array.isArray(data.detail)
+            ) {
+
                 return data.detail
                     .map(function (item) {
-                        return item.msg || JSON.stringify(item);
+
+                        return item.msg ||
+                            JSON.stringify(item);
+
                     })
                     .join("; ");
+
             }
 
-            if (data && typeof data.message === "string") {
+            if (
+                data &&
+                typeof data.message === "string"
+            ) {
+
                 return data.message;
+
             }
 
-            if (data && typeof data.error === "string") {
+            if (
+                data &&
+                typeof data.error === "string"
+            ) {
+
                 return data.error;
+
             }
 
             return "The server returned HTTP " + status + ".";
+
         }
 
+
         /*
-         * Send the question to the FastAPI backend
+         * SEND QUESTION TO FASTAPI BACKEND
          */
+
         async function sendQuestion(question) {
+
             if (isSending) {
+
                 return;
+
             }
 
             isSending = true;
+
             sendButton.disabled = true;
+
             chatInput.disabled = true;
 
             showTypingIndicator();
 
+
             try {
-                /*
-                 * Send the question using the field expected by api.py.
-                 *
-                 * Correct request:
-                 * {
-                 *     "question": "Your question"
-                 * }
-                 */
+
                 const response = await fetch(API_URL, {
+
                     method: "POST",
 
                     headers: {
+
                         "Content-Type": "application/json",
+
                         "Accept": "application/json"
+
                     },
 
                     body: JSON.stringify({
+
                         question: question
+
                     })
+
                 });
 
+
                 /*
-                 * Read the response safely
+                 * READ RESPONSE
                  */
+
                 let data;
 
                 try {
+
                     data = await response.json();
+
                 } catch (jsonError) {
+
                     throw new Error(
                         "The server did not return valid JSON. " +
                         "Please check the API endpoint."
                     );
+
                 }
 
+
                 /*
-                 * Handle unsuccessful HTTP responses
+                 * HANDLE HTTP ERRORS
                  */
+
                 if (!response.ok) {
+
                     throw new Error(
-                        getReadableError(data, response.status)
+                        getReadableError(
+                            data,
+                            response.status
+                        )
                     );
+
                 }
 
+
                 /*
-                 * The working FastAPI endpoint returns data.answer,
-                 * not data.reply.
+                 * VALIDATE ANSWER
                  */
+
                 if (
                     !data ||
                     typeof data.answer !== "string" ||
                     data.answer.trim() === ""
                 ) {
+
                     throw new Error(
                         "The API response did not contain a valid answer field. " +
                         "Please check the response returned by api.py."
                     );
+
                 }
 
+
                 /*
-                 * Display the chatbot's answer
+                 * DISPLAY CHATBOT ANSWER
                  */
+
                 addLexMessage(data.answer, "bot");
 
+
             } catch (error) {
-                console.error("Sujo chatbot request failed:", error);
+
+                console.error(
+                    "Sujo chatbot request failed:",
+                    error
+                );
 
                 let errorMessage =
                     "Sorry, I couldn't connect to the chatbot.";
 
                 if (error && error.message) {
-                    errorMessage += "\n\nDetails: " + error.message;
+
+                    errorMessage +=
+                        "\n\nDetails: " + error.message;
+
                 }
 
                 errorMessage +=
@@ -719,83 +966,136 @@ const API_URL="https://necs-legal-ai-chatbot-web.onrender.com/api/chat";
 
                 addLexMessage(errorMessage, "bot");
 
+
             } finally {
+
                 removeTypingIndicator();
 
                 isSending = false;
+
                 sendButton.disabled = false;
+
                 chatInput.disabled = false;
+
                 chatInput.focus();
+
             }
+
         }
 
-        /*
-         * Handle form submission
-         */
-        chatForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-
-            const question = chatInput.value.trim();
-
-            if (!question || isSending) {
-                return;
-            }
-
-            /*
-             * Display the visitor's message
-             */
-            addLexMessage(question, "user");
-
-            /*
-             * Clear the input
-             */
-            chatInput.value = "";
-            chatInput.style.height = "auto";
-
-            /*
-             * Send question to the backend
-             */
-            await sendQuestion(question);
-        });
 
         /*
-         * Allow Enter to send.
-         * Shift + Enter creates a new line.
+         * HANDLE FORM SUBMISSION
          */
-        chatInput.addEventListener("keydown", function (event) {
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey &&
-                !event.isComposing
-            ) {
+
+        chatForm.addEventListener(
+            "submit",
+            async function (event) {
+
                 event.preventDefault();
-                chatForm.requestSubmit();
+
+                const question =
+                    chatInput.value.trim();
+
+                if (!question || isSending) {
+
+                    return;
+
+                }
+
+
+                /*
+                 * DISPLAY VISITOR MESSAGE
+                 */
+
+                addLexMessage(question, "user");
+
+
+                /*
+                 * CLEAR INPUT
+                 */
+
+                chatInput.value = "";
+
+                chatInput.style.height = "auto";
+
+
+                /*
+                 * SEND TO BACKEND
+                 */
+
+                await sendQuestion(question);
+
             }
-        });
+        );
+
 
         /*
-         * Automatically grow the input as the visitor types
+         * ENTER TO SEND
+         * SHIFT + ENTER FOR NEW LINE
          */
-        chatInput.addEventListener("input", function () {
-            chatInput.style.height = "auto";
 
-            chatInput.style.height =
-                Math.min(chatInput.scrollHeight, 100) + "px";
-        });
+        chatInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey &&
+                    !event.isComposing
+                ) {
+
+                    event.preventDefault();
+
+                    chatForm.requestSubmit();
+
+                }
+
+            }
+        );
+
 
         /*
-         * Close the widget when Escape is pressed
+         * AUTO-RESIZE TEXTAREA
          */
-        document.addEventListener("keydown", function (event) {
-            if (
-                event.key === "Escape" &&
-                chatWindow.classList.contains("open")
-            ) {
-                closeChat();
+
+        chatInput.addEventListener(
+            "input",
+            function () {
+
+                chatInput.style.height = "auto";
+
+                chatInput.style.height =
+                    Math.min(
+                        chatInput.scrollHeight,
+                        100
+                    ) + "px";
+
             }
-        });
+        );
+
+
+        /*
+         * CLOSE CHAT WITH ESCAPE
+         */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    chatWindow.classList.contains("open")
+                ) {
+
+                    closeChat();
+
+                }
+
+            }
+        );
+
     </script>
 
 </body>
 </html>
-```
